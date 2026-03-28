@@ -1,0 +1,51 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection, getEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article>
+    <!-- Header -->
+    <header class="mb-10">
+      <div class="flex flex-wrap gap-2 mb-4">
+        {post.data.tags.map((tag) => (
+          <span class="badge">{tag}</span>
+        ))}
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3 text-gray-900 dark:text-gray-50">
+        {post.data.title}
+      </h1>
+      <p class="text-gray-500 dark:text-gray-400 text-sm">
+        Published <time>{fmt(post.data.pubDate)}</time>
+        {post.data.updatedDate && (
+          <> · Updated <time>{fmt(post.data.updatedDate)}</time></>
+        )}
+      </p>
+    </header>
+
+    <!-- Body -->
+    <div class="prose prose-gray dark:prose-invert max-w-none
+                prose-headings:font-semibold prose-headings:tracking-tight
+                prose-code:font-mono prose-code:text-sm
+                prose-a:text-indigo-600 dark:prose-a:text-indigo-400
+                prose-pre:bg-gray-950 prose-pre:border prose-pre:border-gray-800">
+      <Content />
+    </div>
+
+    <!-- Footer nav -->
+    <div class="mt-16 pt-6 border-t border-gray-200 dark:border-gray-800">
+      <a href="/blog" class="link text-sm">← All posts</a>
+    </div>
+  </article>
+</BaseLayout>

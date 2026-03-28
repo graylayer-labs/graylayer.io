@@ -1,0 +1,66 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="About"
+  description="About Eoin McAllister — researcher and engineer at graylayer-labs."
+>
+  <div class="mb-10">
+    <h1 class="text-3xl font-bold tracking-tight mb-3">About</h1>
+  </div>
+
+  <div class="prose prose-gray dark:prose-invert max-w-none">
+    <p>
+      I'm Eoin McAllister, a researcher and engineer working on machine intelligence —
+      specifically hybrid reinforcement learning, reward design, and systems that make
+      decisions under uncertainty.
+    </p>
+
+    <p>
+      I run <a href="https://github.com/graylayer-labs" target="_blank" rel="noopener">graylayer-labs</a>,
+      where I publish open-source tools and experiments that come out of this work.
+    </p>
+
+    <h2>Background</h2>
+    <p>
+      <!-- Fill in: education, past roles, research focus -->
+      [Add your background here]
+    </p>
+
+    <h2>Interests</h2>
+    <ul>
+      <li>Reinforcement learning (model-based + model-free hybrid methods)</li>
+      <li>Reward shaping and auxiliary objectives</li>
+      <li>Efficient inference and deployment of learned policies</li>
+      <li><!-- Add more --></li>
+    </ul>
+
+    <h2>Contact</h2>
+    <p>
+      Best way to reach me is by email:{' '}
+      <a href="mailto:eoinmc.james@gmail.com">eoinmc.james@gmail.com</a>.
+    </p>
+    <p>
+      I'm also on <a href="https://github.com/eoinmcallister" target="_blank" rel="noopener">GitHub</a>.
+    </p>
+  </div>
+
+  <!-- CV download -->
+  <div class="mt-10 p-5 rounded-xl border border-gray-200 dark:border-gray-800 flex items-center justify-between gap-4">
+    <div>
+      <p class="font-medium text-gray-900 dark:text-gray-100 text-sm">Curriculum Vitae</p>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">PDF — last updated [date]</p>
+    </div>
+    <a
+      href="/cv.pdf"
+      class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900 text-sm font-medium transition-colors"
+      download
+    >
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+      </svg>
+      Download CV
+    </a>
+  </div>
+</BaseLayout>

@@ -1,0 +1,62 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Home"
+  description="Research, code, and writing by Eoin McAllister — ML, reinforcement learning, and systems."
+>
+  <!-- Hero -->
+  <section class="pt-8 pb-16">
+    <p class="font-mono text-sm text-indigo-500 dark:text-indigo-400 mb-3 tracking-wide">
+      eoin mcallister
+    </p>
+    <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-gray-50 leading-[1.15] mb-6">
+      Building at the edge of<br />
+      <span class="text-indigo-600 dark:text-indigo-400">machine intelligence.</span>
+    </h1>
+    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-xl leading-relaxed mb-8">
+      I research hybrid reinforcement learning and build tools at
+      <a href="https://github.com/graylayer-labs" class="link" target="_blank" rel="noopener">graylayer-labs</a>.
+      This site collects my research, open-source work, and occasional writing.
+    </p>
+    <div class="flex items-center gap-3 flex-wrap">
+      <a href="/research" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm transition-colors">
+        View Research
+      </a>
+      <a href="/projects" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900 font-medium text-sm transition-colors">
+        Open Source
+      </a>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <hr class="border-gray-200 dark:border-gray-800 mb-12" />
+
+  <!-- Featured sections -->
+  <section class="grid sm:grid-cols-3 gap-6">
+    <a href="/research" class="card group">
+      <div class="text-2xl mb-3">🧠</div>
+      <h2 class="font-semibold text-gray-900 dark:text-gray-100 mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Research</h2>
+      <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+        Hybrid RL agents, reward shaping, and decision-making under uncertainty.
+      </p>
+    </a>
+
+    <a href="/projects" class="card group">
+      <div class="text-2xl mb-3">⚙️</div>
+      <h2 class="font-semibold text-gray-900 dark:text-gray-100 mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Projects</h2>
+      <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+        Open-source tools and experiments from graylayer-labs.
+      </p>
+    </a>
+
+    <a href="/blog" class="card group">
+      <div class="text-2xl mb-3">✍️</div>
+      <h2 class="font-semibold text-gray-900 dark:text-gray-100 mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Blog</h2>
+      <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+        Notes on ML, systems design, and whatever I'm thinking about.
+      </p>
+    </a>
+  </section>
+</BaseLayout>

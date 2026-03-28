@@ -1,0 +1,140 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+interface Repo {
+  id: number;
+  name: string;
+  full_name: string;
+  description: string | null;
+  html_url: string;
+  stargazers_count: number;
+  forks_count: number;
+  language: string | null;
+  topics: string[];
+  updated_at: string;
+  fork: boolean;
+  archived: boolean;
+  visibility: string;
+}
+
+let repos: Repo[] = [];
+let fetchError = false;
+
+try {
+  const res = await fetch(
+    'https://api.github.com/orgs/graylayer-labs/repos?sort=updated&per_page=100&type=public',
+    {
+      headers: {
+        Accept: 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+        // Set GITHUB_TOKEN env var at build time to avoid rate limits
+        ...(import.meta.env.GITHUB_TOKEN
+          ? { Authorization: `Bearer ${import.meta.env.GITHUB_TOKEN}` }
+          : {}),
+      },
+    }
+  );
+
+  if (res.ok) {
+    const data: Repo[] = await res.json();
+    repos = data
+      .filter((r) => !r.fork && !r.archived)
+      .sort((a, b) => b.stargazers_count - a.stargazers_count || new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+  } else {
+    fetchError = true;
+  }
+} catch {
+  fetchError = true;
+}
+
+const languageColors: Record<string, string> = {
+  Python: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
+  TypeScript: 'bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300',
+  JavaScript: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300',
+  Rust: 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300',
+  Go: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300',
+  Shell: 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300',
+};
+
+const langClass = (lang: string | null) =>
+  lang ? (languageColors[lang] ?? 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300') : '';
+---
+
+<BaseLayout
+  title="Projects"
+  description="Open-source projects and experiments from graylayer-labs."
+>
+  <div class="mb-10">
+    <h1 class="text-3xl font-bold tracking-tight mb-3">Projects</h1>
+    <p class="text-gray-500 dark:text-gray-400">
+      Open-source work from{' '}
+      <a href="https://github.com/graylayer-labs" class="link" target="_blank" rel="noopener">
+        graylayer-labs
+      </a>.
+      Fetched live from the GitHub API at build time.
+    </p>
+  </div>
+
+  {fetchError && (
+    <div class="rounded-lg border border-yellow-200 dark:border-yellow-800 bg-yellow-50 dark:bg-yellow-900/20 p-4 text-sm text-yellow-800 dark:text-yellow-200 mb-8">
+      Could not fetch repos from GitHub at build time. Check the org name or set a{' '}
+      <code class="font-mono">GITHUB_TOKEN</code> env var to avoid rate limits.
+    </div>
+  )}
+
+  {repos.length === 0 && !fetchError && (
+    <p class="text-gray-500 dark:text-gray-400 text-sm">No public repositories found.</p>
+  )}
+
+  <div class="grid gap-4">
+    {repos.map((repo) => (
+      <a
+        href={repo.html_url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="card flex flex-col gap-3 group no-underline"
+      >
+        <div class="flex items-start justify-between gap-4">
+          <h2 class="font-mono font-medium text-gray-900 dark:text-gray-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+            {repo.name}
+          </h2>
+          <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 shrink-0">
+            {repo.stargazers_count > 0 && (
+              <span class="flex items-center gap-1">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/>
+                </svg>
+                {repo.stargazers_count}
+              </span>
+            )}
+            {repo.forks_count > 0 && (
+              <span class="flex items-center gap-1">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"/>
+                </svg>
+                {repo.forks_count}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {repo.description && (
+          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+            {repo.description}
+          </p>
+        )}
+
+        <div class="flex flex-wrap gap-2 mt-auto pt-1">
+          {repo.language && (
+            <span class:list={['badge', langClass(repo.language)]}>
+              {repo.language}
+            </span>
+          )}
+          {repo.topics.slice(0, 4).map((topic) => (
+            <span class="badge">{topic}</span>
+          ))}
+        </div>
+      </a>
+    ))}
+  </div>
+</BaseLayout>

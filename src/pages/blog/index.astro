@@ -1,0 +1,50 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<BaseLayout
+  title="Blog"
+  description="Writing on ML, systems design, and research."
+>
+  <div class="mb-10">
+    <h1 class="text-3xl font-bold tracking-tight mb-3">Blog</h1>
+    <p class="text-gray-500 dark:text-gray-400">
+      Notes and essays. Infrequent but considered.
+    </p>
+  </div>
+
+  {posts.length === 0 ? (
+    <div class="text-center py-16 text-gray-400 dark:text-gray-500">
+      <p class="text-lg mb-2">Nothing here yet.</p>
+      <p class="text-sm">Posts are written in Markdown and live in <code class="font-mono text-xs">src/content/blog/</code>.</p>
+    </div>
+  ) : (
+    <div class="divide-y divide-gray-100 dark:divide-gray-800">
+      {posts.map((post) => (
+        <a
+          href={`/blog/${post.slug}`}
+          class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 py-4 group no-underline"
+        >
+          <h2 class="font-medium text-gray-900 dark:text-gray-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+            {post.data.title}
+          </h2>
+          <div class="flex items-center gap-3 shrink-0">
+            {post.data.tags.map((tag) => (
+              <span class="badge">{tag}</span>
+            ))}
+            <time class="text-sm text-gray-400 dark:text-gray-500">
+              {fmt(post.data.pubDate)}
+            </time>
+          </div>
+        </a>
+      ))}
+    </div>
+  )}
+</BaseLayout>
