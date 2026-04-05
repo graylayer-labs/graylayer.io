@@ -1,93 +1,77 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-
-const research = [
-  {
-    title: 'Hybrid Reinforcement Learning Agent',
-    status: 'In Progress',
-    tags: ['Reinforcement Learning', 'Hybrid Methods', 'Decision Making'],
-    description: `
-      Developing a hybrid RL architecture that combines model-free and model-based
-      approaches to improve sample efficiency and generalisation. The agent maintains
-      a learned world model for planning while retaining a policy network for
-      reactive behaviour in high-variance environments.
-    `,
-    highlights: [
-      'Combines Dreamer-style latent planning with SAC policy learning',
-      'Tested on continuous control benchmarks (MuJoCo, DMControl)',
-      'Reward shaping via learned auxiliary objectives',
-    ],
-    links: [],
-  },
-];
+import PageHeader from '@/components/PageHeader.astro';
 ---
 
 <BaseLayout
   title="Research"
-  description="Research on hybrid reinforcement learning and machine intelligence."
+  description="RL agent architectures, hybrid control, and language-conditioned behaviour."
 >
-  <div class="mb-10">
-    <h1 class="text-3xl font-bold tracking-tight mb-3">Research</h1>
-    <p class="text-gray-500 dark:text-gray-400 max-w-xl">
-      Work focused on hybrid RL architectures, reward design, and sample-efficient
-      decision making. Pre-prints and code linked when available.
-    </p>
+  <PageHeader
+    tag="Research"
+    title="Work in progress."
+    description="RL agent architectures, hybrid control, and language-conditioned behaviour."
+  />
+
+  <hr style="border: none; border-top: 0.5px solid var(--color-border); margin: 0 var(--space-page);" />
+
+  <section class="content-area"></section>
+
+  <div class="status-bar">
+    <div class="status-item">
+      <span class="status-dot"></span>
+      <span>Active — Lang Control RL</span>
+    </div>
+    <div class="status-links">
+      <a href="https://github.com/graylayer-labs" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/eoin-mcallister-ml" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
   </div>
-
-  <div class="space-y-8">
-    {research.map((item) => (
-      <article class="card">
-        <div class="flex items-start justify-between gap-4 mb-3">
-          <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            {item.title}
-          </h2>
-          <span class:list={[
-            'shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium',
-            item.status === 'Published'
-              ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300'
-              : item.status === 'In Progress'
-              ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300'
-              : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400',
-          ]}>
-            <span class="w-1.5 h-1.5 rounded-full bg-current" />
-            {item.status}
-          </span>
-        </div>
-
-        <div class="flex flex-wrap gap-2 mb-4">
-          {item.tags.map((tag) => (
-            <span class="badge">{tag}</span>
-          ))}
-        </div>
-
-        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
-          {item.description.trim()}
-        </p>
-
-        <ul class="space-y-1.5 mb-4">
-          {item.highlights.map((h) => (
-            <li class="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <span class="mt-1.5 w-1 h-1 rounded-full bg-indigo-400 shrink-0" />
-              {h}
-            </li>
-          ))}
-        </ul>
-
-        {item.links.length > 0 && (
-          <div class="flex gap-4 pt-2 border-t border-gray-100 dark:border-gray-800">
-            {item.links.map((link: { label: string; href: string }) => (
-              <a href={link.href} class="link text-sm" target="_blank" rel="noopener">
-                {link.label} →
-              </a>
-            ))}
-          </div>
-        )}
-      </article>
-    ))}
-  </div>
-
-  <!-- Placeholder for future entries -->
-  <p class="mt-10 text-sm text-gray-400 dark:text-gray-500 italic">
-    More work to be added. Pre-prints will link to arXiv when available.
-  </p>
 </BaseLayout>
+
+<style>
+  .content-area {
+    min-height: 200px;
+  }
+
+  .status-bar {
+    border-top: 0.5px solid var(--color-border);
+    padding: 14px var(--space-page);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--color-text-faint);
+  }
+
+  .status-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #3B6D11;
+    flex-shrink: 0;
+  }
+
+  .status-links {
+    display: flex;
+    gap: 18px;
+  }
+
+  .status-links a {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .status-links a:hover {
+    color: var(--color-text);
+  }
+</style>
