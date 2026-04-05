@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -15,18 +15,15 @@ const fmt = (d: Date) =>
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <article>
-    <!-- Header -->
-    <header class="mb-10">
-      <div class="flex flex-wrap gap-2 mb-4">
-        {post.data.tags.map((tag) => (
-          <span class="badge">{tag}</span>
+  <article class="post-article">
+    <header class="post-header">
+      <div class="post-tags">
+        {post.data.tags.map((tag: string) => (
+          <span class="post-tag">{tag}</span>
         ))}
       </div>
-      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3 text-gray-900 dark:text-gray-50">
-        {post.data.title}
-      </h1>
-      <p class="text-gray-500 dark:text-gray-400 text-sm">
+      <h1 class="post-title">{post.data.title}</h1>
+      <p class="post-meta">
         Published <time>{fmt(post.data.pubDate)}</time>
         {post.data.updatedDate && (
           <> · Updated <time>{fmt(post.data.updatedDate)}</time></>
@@ -34,18 +31,72 @@ const fmt = (d: Date) =>
       </p>
     </header>
 
-    <!-- Body -->
-    <div class="prose prose-gray dark:prose-invert max-w-none
-                prose-headings:font-semibold prose-headings:tracking-tight
-                prose-code:font-mono prose-code:text-sm
-                prose-a:text-indigo-600 dark:prose-a:text-indigo-400
-                prose-pre:bg-gray-950 prose-pre:border prose-pre:border-gray-800">
+    <div class="prose">
       <Content />
     </div>
 
-    <!-- Footer nav -->
-    <div class="mt-16 pt-6 border-t border-gray-200 dark:border-gray-800">
-      <a href="/blog" class="link text-sm">← All posts</a>
+    <div class="post-back">
+      <a href="/blog">← All posts</a>
     </div>
   </article>
 </BaseLayout>
+
+<style>
+  .post-article {
+    padding: 56px 0 72px;
+  }
+
+  .post-header {
+    padding: 0 var(--space-page) 40px;
+    max-width: 680px;
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .post-tag {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+    border: 0.5px solid var(--color-border-mid);
+    padding: 3px 8px;
+  }
+
+  .post-title {
+    font-family: var(--font-serif);
+    font-size: clamp(26px, 3.5vw, 40px);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    color: var(--color-text);
+  }
+
+  .post-meta {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--color-text-faint);
+  }
+
+  .prose {
+    padding: 0 var(--space-page);
+    max-width: 680px;
+  }
+
+  .post-back {
+    padding: 40px var(--space-page) 0;
+    border-top: 0.5px solid var(--color-border);
+    margin-top: 56px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+  }
+
+  .post-back a:hover {
+    color: var(--color-text);
+  }
+</style>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
@@ -11,40 +12,125 @@ const fmt = (d: Date) =>
 
 <BaseLayout
   title="Blog"
-  description="Writing on ML, systems design, and research."
+  description="No cadence. Written when there's something worth saying."
 >
-  <div class="mb-10">
-    <h1 class="text-3xl font-bold tracking-tight mb-3">Blog</h1>
-    <p class="text-gray-500 dark:text-gray-400">
-      Notes and essays. Infrequent but considered.
-    </p>
-  </div>
+  <PageHeader
+    tag="Writing"
+    title="Notes."
+    description="No cadence. Written when there's something worth saying."
+  />
 
-  {posts.length === 0 ? (
-    <div class="text-center py-16 text-gray-400 dark:text-gray-500">
-      <p class="text-lg mb-2">Nothing here yet.</p>
-      <p class="text-sm">Posts are written in Markdown and live in <code class="font-mono text-xs">src/content/blog/</code>.</p>
+  <hr style="border: none; border-top: 0.5px solid var(--color-border); margin: 0 var(--space-page);" />
+
+  <section class="content-area">
+    {posts.length === 0 ? (
+      <p class="empty">Nothing here yet.</p>
+    ) : (
+      <div class="post-list">
+        {posts.map((post) => (
+          <a href={`/blog/${post.slug}`} class="post-item">
+            <span class="post-title">{post.data.title}</span>
+            <time class="post-date">{fmt(post.data.pubDate)}</time>
+          </a>
+        ))}
+      </div>
+    )}
+  </section>
+
+  <div class="status-bar">
+    <div class="status-item">
+      <span class="status-dot"></span>
+      <span>Active — Lang Control RL</span>
     </div>
-  ) : (
-    <div class="divide-y divide-gray-100 dark:divide-gray-800">
-      {posts.map((post) => (
-        <a
-          href={`/blog/${post.slug}`}
-          class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 py-4 group no-underline"
-        >
-          <h2 class="font-medium text-gray-900 dark:text-gray-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-            {post.data.title}
-          </h2>
-          <div class="flex items-center gap-3 shrink-0">
-            {post.data.tags.map((tag) => (
-              <span class="badge">{tag}</span>
-            ))}
-            <time class="text-sm text-gray-400 dark:text-gray-500">
-              {fmt(post.data.pubDate)}
-            </time>
-          </div>
-        </a>
-      ))}
+    <div class="status-links">
+      <a href="https://github.com/graylayer-labs" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/eoin-mcallister-ml" target="_blank" rel="noopener">LinkedIn</a>
     </div>
-  )}
+  </div>
 </BaseLayout>
+
+<style>
+  .content-area {
+    min-height: 200px;
+  }
+
+  .empty {
+    padding: 40px var(--space-page);
+    font-size: 13px;
+    color: var(--color-text-muted);
+    font-weight: 300;
+  }
+
+  .post-list {
+    border-top: 0.5px solid var(--color-border);
+  }
+
+  .post-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 16px var(--space-page);
+    border-bottom: 0.5px solid var(--color-border);
+    transition: background 0.1s;
+  }
+
+  .post-item:hover {
+    background: rgba(128, 128, 120, 0.04);
+  }
+
+  .post-title {
+    font-size: 13px;
+    color: var(--color-text);
+    font-weight: 400;
+  }
+
+  .post-date {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--color-text-faint);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .status-bar {
+    border-top: 0.5px solid var(--color-border);
+    padding: 14px var(--space-page);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--color-text-faint);
+  }
+
+  .status-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #3B6D11;
+    flex-shrink: 0;
+  }
+
+  .status-links {
+    display: flex;
+    gap: 18px;
+  }
+
+  .status-links a {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .status-links a:hover {
+    color: var(--color-text);
+  }
+</style>
