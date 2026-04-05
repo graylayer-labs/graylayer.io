@@ -3,12 +3,14 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-  <span class="footer-copy">© {year} Eoin McAllister</span>
+  <div class="footer-copy">
+    <span>© {year} Eoin McAllister</span>
+    <span>ML engineer focused on reinforcement learning and production ML systems.</span>
+  </div>
   <div class="footer-links">
     <a href="https://github.com/graylayer-labs" target="_blank" rel="noopener">GitHub</a>
     <a href="https://linkedin.com/in/eoin-mcallister-ml" target="_blank" rel="noopener">LinkedIn</a>
     <a href="mailto:eoinmc.james@gmail.com">Email</a>
-    <a href="/rss.xml">RSS</a>
   </div>
 </footer>
 
@@ -18,18 +20,25 @@ const year = new Date().getFullYear();
     padding: 18px var(--space-page);
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    gap: 24px;
   }
 
   .footer-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
     font-size: 10px;
     letter-spacing: 0.08em;
     color: var(--color-text-faint);
+    text-transform: uppercase;
   }
 
   .footer-links {
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .footer-links a {
@@ -41,5 +50,15 @@ const year = new Date().getFullYear();
 
   .footer-links a:hover {
     color: var(--color-text);
+  }
+
+  @media (max-width: 720px) {
+    .site-footer {
+      flex-direction: column;
+    }
+
+    .footer-links {
+      justify-content: flex-start;
+    }
   }
 </style>

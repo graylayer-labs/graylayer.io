@@ -12,10 +12,12 @@ interface Props {
 const {
   title,
   description = 'Research, code, and writing by Eoin McAllister — graylayer.io',
-  ogImage = '/og-default.png',
+  ogImage,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const pageTitle = title === 'Home' ? 'graylayer' : `${title} — graylayer`;
+const socialTitle = title === 'Home' ? 'graylayer.io' : `${title} — graylayer.io`;
 ---
 
 <!doctype html>
@@ -26,20 +28,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
 
-    <title>{title === 'Home' ? 'graylayer' : `${title} — graylayer`}</title>
+    <title>{pageTitle}</title>
     <meta name="description" content={description} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={socialTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+    {ogImage && <meta property="og:image" content={new URL(ogImage, Astro.site)} />}
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:title" content={socialTitle} />
     <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />}
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

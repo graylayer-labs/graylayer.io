@@ -5,73 +5,140 @@ import PageHeader from '@/components/PageHeader.astro';
 
 <BaseLayout
   title="Research"
-  description="RL agent architectures, hybrid control, and language-conditioned behaviour."
+  description="Research directions and current work in reinforcement learning, hybrid control, and language-conditioned behaviour."
 >
   <PageHeader
     tag="Research"
-    title="Work in progress."
-    description="RL agent architectures, hybrid control, and language-conditioned behaviour."
+    title="Research directions and active work."
+    description="I’m most interested in reinforcement learning systems that are controllable, reusable, and practical to evaluate."
   />
 
-  <hr style="border: none; border-top: 0.5px solid var(--color-border); margin: 0 var(--space-page);" />
+  <section class="research-grid">
+    <article class="research-main">
+      <div class="research-block">
+        <span class="block-label">Current thread</span>
+        <h2>Language-conditioned control without retraining.</h2>
+        <p>
+          I’m exploring RL agents that can adapt behaviour from natural-language goals without
+          learning a fresh policy for every task variant. The motivating question is how to build
+          agents that are more flexible at inference time while staying grounded in stable training
+          pipelines.
+        </p>
+        <p>
+          The work combines hybrid control ideas, learned language representations, and a practical
+          concern for what can actually be trained, inspected, and iterated on by a small team.
+        </p>
+      </div>
 
-  <section class="content-area"></section>
+      <div class="research-block">
+        <span class="block-label">What I care about</span>
+        <ul>
+          <li>RL architectures that separate reusable competence from task-specific objectives</li>
+          <li>Evaluation setups that make behavioural changes obvious and measurable</li>
+          <li>Tooling that shortens the loop between experiment design and implementation</li>
+          <li>Interfaces between language signals and continuous-control policies</li>
+        </ul>
+      </div>
+    </article>
 
-  <div class="status-bar">
-    <div class="status-item">
-      <span class="status-dot"></span>
-      <span>Active — Lang Control RL</span>
-    </div>
-    <div class="status-links">
-      <a href="https://github.com/graylayer-labs" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://linkedin.com/in/eoin-mcallister-ml" target="_blank" rel="noopener">LinkedIn</a>
-    </div>
-  </div>
+    <aside class="research-side">
+      <div class="side-block">
+        <span class="block-label">Working style</span>
+        <p>I like research that results in code, artifacts, and a system another engineer can pick up.</p>
+      </div>
+
+      <div class="side-block">
+        <span class="block-label">Relevant outputs</span>
+        <ul>
+          <li><a href="/projects">Open-source repositories</a></li>
+          <li><a href="/blog">Research notes and writing</a></li>
+          <li><a href="https://github.com/graylayer-labs" target="_blank" rel="noopener">graylayer-labs on GitHub</a></li>
+        </ul>
+      </div>
+
+      <div class="side-block">
+        <span class="block-label">Next to add</span>
+        <p>Project write-ups, benchmark details, and experiment notes for current RL work.</p>
+      </div>
+    </aside>
+  </section>
 </BaseLayout>
 
 <style>
-  .content-area {
-    min-height: 200px;
-  }
-
-  .status-bar {
+  .research-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);
     border-top: 0.5px solid var(--color-border);
-    padding: 14px var(--space-page);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
   }
 
-  .status-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  .research-main,
+  .research-side {
+    padding: 32px var(--space-page) 56px;
+  }
+
+  .research-main {
+    border-right: 0.5px solid var(--color-border);
+  }
+
+  .research-block + .research-block,
+  .side-block + .side-block {
+    margin-top: 28px;
+    padding-top: 28px;
+    border-top: 0.5px solid var(--color-border);
+  }
+
+  .block-label {
+    display: block;
+    margin-bottom: 14px;
     font-size: 10px;
-    letter-spacing: 0.1em;
-    color: var(--color-text-faint);
-  }
-
-  .status-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #3B6D11;
-    flex-shrink: 0;
-  }
-
-  .status-links {
-    display: flex;
-    gap: 18px;
-  }
-
-  .status-links a {
-    font-size: 10px;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--color-text-faint);
   }
 
-  .status-links a:hover {
-    color: var(--color-text);
+  .research-main h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 18px;
+    max-width: 640px;
+  }
+
+  .research-main p,
+  .research-side p,
+  .research-main li,
+  .research-side li {
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--color-text-muted);
+    font-weight: 300;
+  }
+
+  .research-main ul,
+  .research-side ul {
+    padding-left: 18px;
+  }
+
+  .research-main li + li,
+  .research-side li + li {
+    margin-top: 10px;
+  }
+
+  .research-side a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--color-border-mid);
+  }
+
+  @media (max-width: 860px) {
+    .research-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .research-main {
+      border-right: none;
+      border-bottom: 0.5px solid var(--color-border);
+    }
   }
 </style>
