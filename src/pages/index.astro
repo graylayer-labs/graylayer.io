@@ -4,108 +4,123 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 
 <BaseLayout
   title="Home"
-  description="ML Engineer. Hybrid RL agents and production ML systems."
+  description="Eoin McAllister is an ML engineer building reinforcement learning systems, research prototypes, and production ML infrastructure."
 >
-  <div class="hero">
-    <p class="hero-label">eoin mcallister</p>
-    <h1 class="hero-h1">
-      Work at the boundary<br />
-      <em>of known and unknown.</em>
-    </h1>
+  <section class="hero">
+    <p class="eyebrow">Eoin McAllister</p>
+    <h1 class="hero-title">ML engineer building reinforcement learning systems and production ML software.</h1>
     <p class="hero-lead">
-      ML Engineer. I build hybrid RL agents and production ML systems.<br />
-      Current work: language-conditioned control without retraining.
+      I work across applied research and engineering: training agents, shaping experiments,
+      and turning ML ideas into systems that are usable by teams.
     </p>
-    <div class="hero-actions">
-      <a href="/research" class="btn-primary">Research</a>
-      <a href="/projects" class="btn-ghost">Open source</a>
-    </div>
-  </div>
 
-  <section class="cards-section">
-    <div class="card">
-      <span class="card-tag">01 — Research</span>
-      <h3 class="card-title">Lang Control RL</h3>
-      <p class="card-body">Hybrid SAC agent conditioned on natural language goals via a learned encoder. Objective-flexible competence without retraining.</p>
-      <a href="/research" class="card-link">Read more →</a>
-    </div>
-    <div class="card">
-      <span class="card-tag">02 — Projects</span>
-      <h3 class="card-title">graylayer-labs</h3>
-      <p class="card-body">Open-source tooling for RL experimentation, reusable MLOps primitives, and ML infrastructure. Fetched live from GitHub.</p>
-      <a href="/projects" class="card-link">View repos →</a>
-    </div>
-    <div class="card">
-      <span class="card-tag">03 — Writing</span>
-      <h3 class="card-title">Notes</h3>
-      <p class="card-body">Occasional writing on RL theory, production ML systems, and whatever I'm working through.</p>
-      <a href="/blog" class="card-link">Read →</a>
+    <div class="hero-actions">
+      <a href="/research" class="btn-primary">View research</a>
+      <a href="/projects" class="btn-ghost">Browse projects</a>
+      <a href="/about" class="btn-ghost">About me</a>
     </div>
   </section>
 
-  <div class="status-bar">
-    <div class="status-item">
-      <span class="status-dot"></span>
-      <span>Active — Lang Control RL</span>
+  <section class="highlights">
+    <div class="highlight">
+      <span class="highlight-label">Current focus</span>
+      <p>Language-conditioned control for RL agents without retraining task-specific policies.</p>
     </div>
-    <div class="status-links">
-      <a href="https://github.com/graylayer-labs" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://linkedin.com/in/eoin-mcallister-ml" target="_blank" rel="noopener">LinkedIn</a>
+    <div class="highlight">
+      <span class="highlight-label">What I build</span>
+      <p>Research prototypes, evaluation tooling, shared RL infrastructure, and production-facing ML systems.</p>
     </div>
-  </div>
+    <div class="highlight">
+      <span class="highlight-label">Background</span>
+      <p>Based in Dublin. Previously Intel. Currently building at UrbanFox.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <p class="section-kicker">Start here</p>
+      <h2>Three fast ways to evaluate my work.</h2>
+    </div>
+
+    <div class="cards">
+      <a href="/research" class="card">
+        <span class="card-tag">Research</span>
+        <h3>What I’m investigating</h3>
+        <p>Current RL directions, what problems I care about, and the kinds of systems questions I like to work on.</p>
+      </a>
+      <a href="/projects" class="card">
+        <span class="card-tag">Projects</span>
+        <h3>Code you can inspect</h3>
+        <p>Open-source repos from graylayer-labs, including shared RL infrastructure and supporting tooling.</p>
+      </a>
+      <a href="/about" class="card">
+        <span class="card-tag">About</span>
+        <h3>Experience and fit</h3>
+        <p>Who I am, how I work, and the environments where I’m most effective as an ML engineer.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="section proof">
+    <div class="section-heading">
+      <p class="section-kicker">What matters</p>
+      <h2>The through-line in my work is making ML ideas legible and shippable.</h2>
+    </div>
+
+    <div class="proof-grid">
+      <div class="proof-item">
+        <h3>Research-minded engineering</h3>
+        <p>I like problems that require both experimentation discipline and implementation depth.</p>
+      </div>
+      <div class="proof-item">
+        <h3>Systems perspective</h3>
+        <p>I care about training loops, evaluation, reproducibility, interfaces, and how other people use the system after the prototype works.</p>
+      </div>
+      <div class="proof-item">
+        <h3>Clear communication</h3>
+        <p>This site is where I’m collecting the projects, notes, and research threads that best represent how I think.</p>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
   .hero {
-    padding: var(--space-section) var(--space-page) 56px;
-    max-width: 680px;
+    padding: var(--space-section) var(--space-page) 52px;
+    max-width: 860px;
   }
 
-  .hero-label {
+  .eyebrow,
+  .section-kicker,
+  .highlight-label,
+  .card-tag {
     font-size: 10px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--color-text-faint);
-    margin-bottom: 22px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
   }
 
-  .hero-label::before {
-    content: '';
-    display: block;
-    width: 20px;
-    height: 0.5px;
-    background: var(--color-text-faint);
+  .eyebrow {
+    margin-bottom: 20px;
   }
 
-  .hero-h1 {
+  .hero-title {
     font-family: var(--font-serif);
-    font-size: clamp(30px, 4vw, 48px);
+    font-size: clamp(34px, 5vw, 58px);
     font-weight: 400;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 780px;
     margin-bottom: 22px;
-  }
-
-  .hero-h1 em {
-    font-style: italic;
-    color: var(--color-text-muted);
   }
 
   .hero-lead {
-    font-size: 13px;
-    line-height: 1.8;
+    max-width: 620px;
+    font-size: 14px;
+    line-height: 1.9;
     color: var(--color-text-muted);
     font-weight: 300;
-    max-width: 440px;
-    margin-bottom: 36px;
-  }
-
-  .hero-lead strong {
-    font-weight: 400;
-    color: var(--color-text);
+    margin-bottom: 32px;
   }
 
   .hero-actions {
@@ -114,138 +129,140 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
     flex-wrap: wrap;
   }
 
-  .btn-primary {
-    font-family: var(--font-mono);
+  .btn-primary,
+  .btn-ghost {
+    display: inline-block;
+    padding: 10px 18px;
     font-size: 11px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 9px 18px;
+  }
+
+  .btn-primary {
     background: var(--color-text);
     color: var(--color-bg);
-    display: inline-block;
   }
 
   .btn-ghost {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 9px 18px;
-    background: transparent;
-    color: var(--color-text-muted);
     border: 0.5px solid var(--color-border-mid);
-    display: inline-block;
+    color: var(--color-text-muted);
   }
 
   .btn-ghost:hover {
     color: var(--color-text);
   }
 
-  .cards-section {
+  .highlights,
+  .cards,
+  .proof-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border-top: 0.5px solid var(--color-border);
-    margin-top: 56px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .highlights {
+    border-top: 0.5px solid var(--color-border);
+    border-bottom: 0.5px solid var(--color-border);
+  }
+
+  .highlight,
+  .card,
+  .proof-item {
+    padding: 24px var(--space-page);
+  }
+
+  .highlight,
   .card {
-    padding: 28px var(--space-page);
     border-right: 0.5px solid var(--color-border);
   }
 
+  .highlight:last-child,
   .card:last-child {
     border-right: none;
   }
 
-  .card-tag {
-    display: block;
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--color-text-faint);
-    margin-bottom: 14px;
-  }
-
-  .card-title {
-    font-family: var(--font-serif);
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--color-text);
-    margin-bottom: 10px;
-  }
-
-  .card-body {
+  .highlight p,
+  .card p,
+  .proof-item p {
+    margin-top: 10px;
     font-size: 12px;
-    line-height: 1.75;
+    line-height: 1.8;
     color: var(--color-text-muted);
     font-weight: 300;
   }
 
-  .card-link {
-    display: inline-block;
-    margin-top: 18px;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    color: var(--color-text-faint);
+  .section {
+    padding: 52px 0 0;
   }
 
-  .card-link:hover {
-    color: var(--color-text);
+  .section-heading {
+    padding: 0 var(--space-page) 22px;
+    max-width: 780px;
   }
 
-  @media (max-width: 720px) {
-    .cards-section {
+  .section-heading h2 {
+    margin-top: 12px;
+    font-family: var(--font-serif);
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 400;
+    line-height: 1.1;
+  }
+
+  .cards {
+    border-top: 0.5px solid var(--color-border);
+  }
+
+  .card {
+    display: block;
+    transition: background 0.12s ease;
+  }
+
+  .card:hover {
+    background: rgba(128, 128, 120, 0.04);
+  }
+
+  .card h3,
+  .proof-item h3 {
+    margin-top: 12px;
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .proof {
+    padding-bottom: 56px;
+  }
+
+  .proof-grid {
+    border-top: 0.5px solid var(--color-border);
+  }
+
+  .proof-item {
+    border-right: 0.5px solid var(--color-border);
+  }
+
+  .proof-item:last-child {
+    border-right: none;
+  }
+
+  @media (max-width: 860px) {
+    .highlights,
+    .cards,
+    .proof-grid {
       grid-template-columns: 1fr;
     }
 
-    .card {
+    .highlight,
+    .card,
+    .proof-item {
       border-right: none;
       border-bottom: 0.5px solid var(--color-border);
     }
 
-    .card:last-child {
+    .highlights .highlight:last-child,
+    .cards .card:last-child,
+    .proof-grid .proof-item:last-child {
       border-bottom: none;
     }
-  }
-
-  .status-bar {
-    border-top: 0.5px solid var(--color-border);
-    padding: 14px var(--space-page);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .status-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: var(--color-text-faint);
-  }
-
-  .status-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #3B6D11;
-    flex-shrink: 0;
-  }
-
-  .status-links {
-    display: flex;
-    gap: 18px;
-  }
-
-  .status-links a {
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-text-faint);
-  }
-
-  .status-links a:hover {
-    color: var(--color-text);
   }
 </style>

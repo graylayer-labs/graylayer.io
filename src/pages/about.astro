@@ -5,73 +5,132 @@ import PageHeader from '@/components/PageHeader.astro';
 
 <BaseLayout
   title="About"
-  description="ML Engineer based in Dublin. Previously Intel. Building at UrbanFox."
+  description="About Eoin McAllister, an ML engineer working across reinforcement learning, experimentation, and production systems."
 >
   <PageHeader
     tag="About"
-    title="Eoin McAllister."
-    description="ML Engineer based in Dublin. Previously Intel. Building at UrbanFox."
+    title="I work where research and engineering meet."
+    description="I’m an ML engineer based in Dublin, focused on reinforcement learning systems, experimental infrastructure, and production-facing ML software."
   />
 
-  <hr style="border: none; border-top: 0.5px solid var(--color-border); margin: 0 var(--space-page);" />
-
-  <section class="content-area"></section>
-
-  <div class="status-bar">
-    <div class="status-item">
-      <span class="status-dot"></span>
-      <span>Active — Lang Control RL</span>
+  <section class="about-grid">
+    <div class="about-main">
+      <p>
+        My work sits in the gap between promising ideas and reliable systems. I’m interested in
+        reinforcement learning, controllable agent behaviour, evaluation, and the engineering work
+        required to make ML useful beyond a demo.
+      </p>
+      <p>
+        I’ve worked in environments where the job is not just to train a model, but to build the
+        surrounding machinery: data flows, interfaces, experiments, tooling, and the habits that
+        make iteration faster and safer.
+      </p>
+      <p>
+        This site is a compact record of that work. Recruiters should be able to see my scope
+        quickly. Engineers should be able to inspect the projects and understand how I think.
+      </p>
     </div>
-    <div class="status-links">
-      <a href="https://github.com/graylayer-labs" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://linkedin.com/in/eoin-mcallister-ml" target="_blank" rel="noopener">LinkedIn</a>
+
+    <div class="about-side">
+      <div class="detail-block">
+        <span class="detail-label">Experience</span>
+        <ul>
+          <li>Currently building at UrbanFox</li>
+          <li>Previously at Intel</li>
+          <li>Based in Dublin, Ireland</li>
+        </ul>
+      </div>
+
+      <div class="detail-block">
+        <span class="detail-label">Focus areas</span>
+        <ul>
+          <li>Reinforcement learning</li>
+          <li>Language-conditioned control</li>
+          <li>ML tooling and infrastructure</li>
+          <li>Production ML systems</li>
+        </ul>
+      </div>
+
+      <div class="detail-block">
+        <span class="detail-label">Links</span>
+        <ul>
+          <li><a href="/projects">Projects</a></li>
+          <li><a href="/research">Research</a></li>
+          <li><a href="https://github.com/graylayer-labs" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://linkedin.com/in/eoin-mcallister-ml" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
+  </section>
 </BaseLayout>
 
 <style>
-  .content-area {
-    min-height: 200px;
-  }
-
-  .status-bar {
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);
+    gap: 0;
     border-top: 0.5px solid var(--color-border);
-    padding: 14px var(--space-page);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
   }
 
-  .status-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  .about-main,
+  .about-side {
+    padding: 32px var(--space-page) 56px;
+  }
+
+  .about-main {
+    border-right: 0.5px solid var(--color-border);
+    max-width: 760px;
+  }
+
+  .about-main p {
+    font-size: 13px;
+    line-height: 1.95;
+    color: var(--color-text-muted);
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  .detail-block + .detail-block {
+    margin-top: 28px;
+    padding-top: 28px;
+    border-top: 0.5px solid var(--color-border);
+  }
+
+  .detail-label {
+    display: block;
+    margin-bottom: 14px;
     font-size: 10px;
-    letter-spacing: 0.1em;
-    color: var(--color-text-faint);
-  }
-
-  .status-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #3B6D11;
-    flex-shrink: 0;
-  }
-
-  .status-links {
-    display: flex;
-    gap: 18px;
-  }
-
-  .status-links a {
-    font-size: 10px;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--color-text-faint);
   }
 
-  .status-links a:hover {
-    color: var(--color-text);
+  .detail-block ul {
+    list-style: none;
+  }
+
+  .detail-block li {
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+    font-weight: 300;
+    margin-bottom: 8px;
+  }
+
+  .detail-block a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--color-border-mid);
+  }
+
+  @media (max-width: 860px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-main {
+      border-right: none;
+      border-bottom: 0.5px solid var(--color-border);
+    }
   }
 </style>

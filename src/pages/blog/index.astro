@@ -24,7 +24,10 @@ const fmt = (d: Date) =>
 
   <section class="content-area">
     {posts.length === 0 ? (
-      <p class="empty">Nothing here yet.</p>
+      <div class="empty">
+        <p>No posts published yet.</p>
+        <p>Writing here will focus on RL systems, experiments, and notes from production ML work.</p>
+      </div>
     ) : (
       <div class="post-list">
         {posts.map((post) => (
@@ -37,28 +40,28 @@ const fmt = (d: Date) =>
     )}
   </section>
 
-  <div class="status-bar">
-    <div class="status-item">
-      <span class="status-dot"></span>
-      <span>Active — Lang Control RL</span>
-    </div>
-    <div class="status-links">
-      <a href="https://github.com/graylayer-labs" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://linkedin.com/in/eoin-mcallister-ml" target="_blank" rel="noopener">LinkedIn</a>
-    </div>
-  </div>
 </BaseLayout>
 
 <style>
   .content-area {
     min-height: 200px;
+    padding-bottom: 56px;
   }
 
   .empty {
     padding: 40px var(--space-page);
+    border-top: 0.5px solid var(--color-border);
+  }
+
+  .empty p {
     font-size: 13px;
     color: var(--color-text-muted);
     font-weight: 300;
+    line-height: 1.85;
+  }
+
+  .empty p + p {
+    margin-top: 10px;
   }
 
   .post-list {
@@ -91,46 +94,5 @@ const fmt = (d: Date) =>
     color: var(--color-text-faint);
     white-space: nowrap;
     flex-shrink: 0;
-  }
-
-  .status-bar {
-    border-top: 0.5px solid var(--color-border);
-    padding: 14px var(--space-page);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .status-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: var(--color-text-faint);
-  }
-
-  .status-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #3B6D11;
-    flex-shrink: 0;
-  }
-
-  .status-links {
-    display: flex;
-    gap: 18px;
-  }
-
-  .status-links a {
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-text-faint);
-  }
-
-  .status-links a:hover {
-    color: var(--color-text);
   }
 </style>

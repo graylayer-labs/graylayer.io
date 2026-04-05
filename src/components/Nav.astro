@@ -35,6 +35,8 @@ const isActive = (href: string) => pathname.startsWith(href);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
     padding: 26px var(--space-page);
     border-bottom: 0.5px solid var(--color-border);
   }
@@ -62,6 +64,8 @@ const isActive = (href: string) => pathname.startsWith(href);
     display: flex;
     gap: 28px;
     list-style: none;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .nav-links a {
@@ -76,5 +80,15 @@ const isActive = (href: string) => pathname.startsWith(href);
   .nav-links a:hover,
   .nav-links a[aria-current="page"] {
     color: var(--color-text);
+  }
+
+  @media (max-width: 720px) {
+    nav {
+      align-items: flex-start;
+    }
+
+    .nav-links {
+      gap: 18px;
+    }
   }
 </style>
