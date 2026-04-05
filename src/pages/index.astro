@@ -4,59 +4,248 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 
 <BaseLayout
   title="Home"
-  description="Research, code, and writing by Eoin McAllister — ML, reinforcement learning, and systems."
+  description="ML Engineer. Hybrid RL agents and production ML systems."
 >
-  <!-- Hero -->
-  <section class="pt-8 pb-16">
-    <p class="font-mono text-sm text-indigo-500 dark:text-indigo-400 mb-3 tracking-wide">
-      eoin mcallister
-    </p>
-    <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-gray-50 leading-[1.15] mb-6">
-      Building at the edge of<br />
-      <span class="text-indigo-600 dark:text-indigo-400">machine intelligence.</span>
+  <div class="hero">
+    <p class="hero-label">eoin mcallister</p>
+    <h1 class="hero-h1">
+      Work at the boundary<br />
+      <em>of known and unknown.</em>
     </h1>
-    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-xl leading-relaxed mb-8">
-      I research hybrid reinforcement learning and build tools at
-      <a href="https://github.com/graylayer-labs" class="link" target="_blank" rel="noopener">graylayer-labs</a>.
-      This site collects my research, open-source work, and occasional writing.
+    <p class="hero-lead">
+      ML Engineer. I build hybrid RL agents and production ML systems.<br />
+      Current work: language-conditioned control without retraining.
     </p>
-    <div class="flex items-center gap-3 flex-wrap">
-      <a href="/research" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm transition-colors">
-        View Research
-      </a>
-      <a href="/projects" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900 font-medium text-sm transition-colors">
-        Open Source
-      </a>
+    <div class="hero-actions">
+      <a href="/research" class="btn-primary">Research</a>
+      <a href="/projects" class="btn-ghost">Open source</a>
+    </div>
+  </div>
+
+  <section class="cards-section">
+    <div class="card">
+      <span class="card-tag">01 — Research</span>
+      <h3 class="card-title">Lang Control RL</h3>
+      <p class="card-body">Hybrid SAC agent conditioned on natural language goals via a learned encoder. Objective-flexible competence without retraining.</p>
+      <a href="/research" class="card-link">Read more →</a>
+    </div>
+    <div class="card">
+      <span class="card-tag">02 — Projects</span>
+      <h3 class="card-title">graylayer-labs</h3>
+      <p class="card-body">Open-source tooling for RL experimentation, reusable MLOps primitives, and ML infrastructure. Fetched live from GitHub.</p>
+      <a href="/projects" class="card-link">View repos →</a>
+    </div>
+    <div class="card">
+      <span class="card-tag">03 — Writing</span>
+      <h3 class="card-title">Notes</h3>
+      <p class="card-body">Occasional writing on RL theory, production ML systems, and whatever I'm working through.</p>
+      <a href="/blog" class="card-link">Read →</a>
     </div>
   </section>
 
-  <!-- Divider -->
-  <hr class="border-gray-200 dark:border-gray-800 mb-12" />
-
-  <!-- Featured sections -->
-  <section class="grid sm:grid-cols-3 gap-6">
-    <a href="/research" class="card group">
-      <div class="text-2xl mb-3">🧠</div>
-      <h2 class="font-semibold text-gray-900 dark:text-gray-100 mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Research</h2>
-      <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-        Hybrid RL agents, reward shaping, and decision-making under uncertainty.
-      </p>
-    </a>
-
-    <a href="/projects" class="card group">
-      <div class="text-2xl mb-3">⚙️</div>
-      <h2 class="font-semibold text-gray-900 dark:text-gray-100 mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Projects</h2>
-      <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-        Open-source tools and experiments from graylayer-labs.
-      </p>
-    </a>
-
-    <a href="/blog" class="card group">
-      <div class="text-2xl mb-3">✍️</div>
-      <h2 class="font-semibold text-gray-900 dark:text-gray-100 mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Blog</h2>
-      <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-        Notes on ML, systems design, and whatever I'm thinking about.
-      </p>
-    </a>
-  </section>
+  <div class="status-bar">
+    <div class="status-item">
+      <span class="status-dot"></span>
+      <span>Active — Lang Control RL</span>
+    </div>
+    <div class="status-links">
+      <a href="https://github.com/graylayer-labs" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/eoin-mcallister-ml" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
 </BaseLayout>
+
+<style>
+  .hero {
+    padding: var(--space-section) var(--space-page) 56px;
+    max-width: 680px;
+  }
+
+  .hero-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-label::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 0.5px;
+    background: var(--color-text-faint);
+  }
+
+  .hero-h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(30px, 4vw, 48px);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 22px;
+  }
+
+  .hero-h1 em {
+    font-style: italic;
+    color: var(--color-text-muted);
+  }
+
+  .hero-lead {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+    font-weight: 300;
+    max-width: 440px;
+    margin-bottom: 36px;
+  }
+
+  .hero-lead strong {
+    font-weight: 400;
+    color: var(--color-text);
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 9px 18px;
+    background: var(--color-text);
+    color: var(--color-bg);
+    display: inline-block;
+  }
+
+  .btn-ghost {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 9px 18px;
+    background: transparent;
+    color: var(--color-text-muted);
+    border: 0.5px solid var(--color-border-mid);
+    display: inline-block;
+  }
+
+  .btn-ghost:hover {
+    color: var(--color-text);
+  }
+
+  .cards-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 0.5px solid var(--color-border);
+    margin-top: 56px;
+  }
+
+  .card {
+    padding: 28px var(--space-page);
+    border-right: 0.5px solid var(--color-border);
+  }
+
+  .card:last-child {
+    border-right: none;
+  }
+
+  .card-tag {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+    margin-bottom: 14px;
+  }
+
+  .card-title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--color-text);
+    margin-bottom: 10px;
+  }
+
+  .card-body {
+    font-size: 12px;
+    line-height: 1.75;
+    color: var(--color-text-muted);
+    font-weight: 300;
+  }
+
+  .card-link {
+    display: inline-block;
+    margin-top: 18px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--color-text-faint);
+  }
+
+  .card-link:hover {
+    color: var(--color-text);
+  }
+
+  @media (max-width: 720px) {
+    .cards-section {
+      grid-template-columns: 1fr;
+    }
+
+    .card {
+      border-right: none;
+      border-bottom: 0.5px solid var(--color-border);
+    }
+
+    .card:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .status-bar {
+    border-top: 0.5px solid var(--color-border);
+    padding: 14px var(--space-page);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--color-text-faint);
+  }
+
+  .status-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #3B6D11;
+    flex-shrink: 0;
+  }
+
+  .status-links {
+    display: flex;
+    gap: 18px;
+  }
+
+  .status-links a {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .status-links a:hover {
+    color: var(--color-text);
+  }
+</style>
