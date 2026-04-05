@@ -1,10 +1,7 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
   site: 'https://graylayer.io',
-  integrations: [
-    tailwind(),
-  ],
+  integrations: [],
   output: 'static',
 });

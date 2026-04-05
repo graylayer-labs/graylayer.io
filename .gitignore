@@ -5,3 +5,7 @@ node_modules/
 !.env.example
 .DS_Store
 .astro/
+
+.claude/
+website/
+GrayLayer Redesign Plan.md
