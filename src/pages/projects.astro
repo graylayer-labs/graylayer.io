@@ -56,8 +56,8 @@ const fmtDate = (d: string) =>
 >
   <PageHeader
     tag="Projects"
-    title="Open source."
-    description="Tooling and experiments from graylayer-labs."
+    title="Projects and code."
+    description="Case studies, working notes, and public repositories."
   />
 
   <hr style="border: none; border-top: 0.5px solid var(--color-border); margin: 0 var(--space-page);" />
@@ -65,10 +65,32 @@ const fmtDate = (d: string) =>
   <section class="content-area">
     <div class="intro">
       <p>
-        These are the public repositories that best reflect how I build: practical ML tooling,
-        RL infrastructure, and systems work that is meant to be inspected and extended.
+        This page mixes two things: project write-ups and public repositories. The write-ups are
+        the better place to understand design decisions. The repo list is there if you want to go
+        straight to code.
       </p>
     </div>
+
+    <section class="section-block">
+      <div class="section-header">
+        <span class="section-label">Case studies</span>
+        <h2>Project pages</h2>
+      </div>
+
+      <div class="feature-list">
+        <a href="/projects/control-console" class="feature-item">
+          <div>
+            <span class="feature-tag">Dummy project</span>
+            <h3>Control Console for RL Experiments</h3>
+            <p>
+              Placeholder project used to shape the portfolio. The page layout is meant to show
+              how a real engineering case study should read.
+            </p>
+          </div>
+          <span class="feature-link">Open project</span>
+        </a>
+      </div>
+    </section>
 
     {fetchError && (
       <p class="fallback">
@@ -82,21 +104,28 @@ const fmtDate = (d: string) =>
     )}
 
     {repos.length > 0 && (
-      <div class="repo-list">
-        {repos.map((repo) => (
-          <a href={repo.html_url} class="repo-item" target="_blank" rel="noopener noreferrer">
-            <div class="repo-top">
-              <span class="repo-name">{repo.name}</span>
-              {repo.language && <span class="repo-lang">{repo.language}</span>}
-            </div>
-            {repo.description && <p class="repo-desc">{repo.description}</p>}
-            <div class="repo-meta">
-              {repo.stargazers_count > 0 && <span>{repo.stargazers_count} stars</span>}
-              <span>Updated {fmtDate(repo.updated_at)}</span>
-            </div>
-          </a>
-        ))}
-      </div>
+      <section class="section-block">
+        <div class="section-header">
+          <span class="section-label">Repositories</span>
+          <h2>Public GitHub repos</h2>
+        </div>
+
+        <div class="repo-list">
+          {repos.map((repo) => (
+            <a href={repo.html_url} class="repo-item" target="_blank" rel="noopener noreferrer">
+              <div class="repo-top">
+                <span class="repo-name">{repo.name}</span>
+                {repo.language && <span class="repo-lang">{repo.language}</span>}
+              </div>
+              {repo.description && <p class="repo-desc">{repo.description}</p>}
+              <div class="repo-meta">
+                {repo.stargazers_count > 0 && <span>{repo.stargazers_count} stars</span>}
+                <span>Updated {fmtDate(repo.updated_at)}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
     )}
   </section>
 
@@ -119,6 +148,74 @@ const fmtDate = (d: string) =>
     color: var(--color-text-muted);
     font-weight: 300;
     line-height: 1.85;
+  }
+
+  .section-block {
+    padding-top: 28px;
+  }
+
+  .section-header {
+    padding: 0 var(--space-page) 18px;
+  }
+
+  .section-label,
+  .feature-tag {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .section-header h2 {
+    margin-top: 10px;
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  .feature-list {
+    border-top: 0.5px solid var(--color-border);
+    border-bottom: 0.5px solid var(--color-border);
+  }
+
+  .feature-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 24px var(--space-page);
+    transition: background 0.1s;
+  }
+
+  .feature-item:hover {
+    background: rgba(128, 128, 120, 0.04);
+  }
+
+  .feature-item h3 {
+    margin-top: 10px;
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .feature-item p {
+    margin-top: 10px;
+    max-width: 720px;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    font-weight: 300;
+    line-height: 1.75;
+  }
+
+  .feature-link {
+    flex-shrink: 0;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
   }
 
   .fallback {
@@ -185,5 +282,11 @@ const fmtDate = (d: string) =>
     font-size: 10px;
     letter-spacing: 0.08em;
     color: var(--color-text-faint);
+  }
+
+  @media (max-width: 720px) {
+    .feature-item {
+      flex-direction: column;
+    }
   }
 </style>

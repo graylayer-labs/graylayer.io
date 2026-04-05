@@ -8,78 +8,80 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 >
   <section class="hero">
     <p class="eyebrow">Eoin McAllister</p>
-    <h1 class="hero-title">ML engineer building reinforcement learning systems and production ML software.</h1>
+    <h1 class="hero-title">ML engineer working on reinforcement learning, evaluation, and production ML systems.</h1>
     <p class="hero-lead">
-      I work across applied research and engineering: training agents, shaping experiments,
-      and turning ML ideas into systems that are usable by teams.
+      This site is a straightforward overview of my work. The fastest path is:
+      read a project, inspect the code, then use the research and about pages for context.
     </p>
 
     <div class="hero-actions">
-      <a href="/research" class="btn-primary">View research</a>
-      <a href="/projects" class="btn-ghost">Browse projects</a>
+      <a href="/projects" class="btn-primary">View projects</a>
+      <a href="/research" class="btn-ghost">Research</a>
       <a href="/about" class="btn-ghost">About me</a>
     </div>
   </section>
 
-  <section class="highlights">
-    <div class="highlight">
-      <span class="highlight-label">Current focus</span>
-      <p>Language-conditioned control for RL agents without retraining task-specific policies.</p>
+  <section class="summary">
+    <div class="summary-item">
+      <span class="summary-label">Current focus</span>
+      <p>Language-conditioned control for RL agents without task-specific retraining.</p>
     </div>
-    <div class="highlight">
-      <span class="highlight-label">What I build</span>
-      <p>Research prototypes, evaluation tooling, shared RL infrastructure, and production-facing ML systems.</p>
-    </div>
-    <div class="highlight">
-      <span class="highlight-label">Background</span>
+    <div class="summary-item">
+      <span class="summary-label">Background</span>
       <p>Based in Dublin. Previously Intel. Currently building at UrbanFox.</p>
     </div>
+    <div class="summary-item">
+      <span class="summary-label">Typical work</span>
+      <p>RL experiments, evaluation tooling, shared infrastructure, and production ML systems.</p>
+    </div>
+  </section>
+
+  <section class="section featured">
+    <div class="section-heading">
+      <p class="section-kicker">Selected project</p>
+      <h2>One concrete example.</h2>
+    </div>
+
+    <a href="/projects/control-console" class="feature-card">
+      <div class="feature-main">
+        <span class="card-tag">Dummy project</span>
+        <h3>Control Console for RL Experiments</h3>
+        <p>
+          A placeholder case study for testing the portfolio structure. It represents the kind of
+          project page I want here: problem, architecture, implementation details, and evaluation.
+        </p>
+      </div>
+      <div class="feature-meta">
+        <span>Python</span>
+        <span>FastAPI</span>
+        <span>Postgres</span>
+        <span>Experiment tracking</span>
+      </div>
+    </a>
   </section>
 
   <section class="section">
     <div class="section-heading">
       <p class="section-kicker">Start here</p>
-      <h2>Three fast ways to evaluate my work.</h2>
+      <h2>How to read the site.</h2>
     </div>
 
     <div class="cards">
-      <a href="/research" class="card">
-        <span class="card-tag">Research</span>
-        <h3>What I’m investigating</h3>
-        <p>Current RL directions, what problems I care about, and the kinds of systems questions I like to work on.</p>
-      </a>
       <a href="/projects" class="card">
         <span class="card-tag">Projects</span>
-        <h3>Code you can inspect</h3>
-        <p>Open-source repos from graylayer-labs, including shared RL infrastructure and supporting tooling.</p>
+        <h3>Code and case studies</h3>
+        <p>Use this first if you want to see implementation choices, tooling, and concrete outputs.</p>
+      </a>
+      <a href="/research" class="card">
+        <span class="card-tag">Research</span>
+        <h3>Technical interests</h3>
+        <p>Use this to see the RL questions I am working on and the kinds of systems problems I care about.</p>
       </a>
       <a href="/about" class="card">
         <span class="card-tag">About</span>
-        <h3>Experience and fit</h3>
-        <p>Who I am, how I work, and the environments where I’m most effective as an ML engineer.</p>
+        <h3>Background</h3>
+        <p>Use this for quick context on experience, focus areas, and where I have worked.</p>
       </a>
-    </div>
-  </section>
-
-  <section class="section proof">
-    <div class="section-heading">
-      <p class="section-kicker">What matters</p>
-      <h2>The through-line in my work is making ML ideas legible and shippable.</h2>
-    </div>
-
-    <div class="proof-grid">
-      <div class="proof-item">
-        <h3>Research-minded engineering</h3>
-        <p>I like problems that require both experimentation discipline and implementation depth.</p>
-      </div>
-      <div class="proof-item">
-        <h3>Systems perspective</h3>
-        <p>I care about training loops, evaluation, reproducibility, interfaces, and how other people use the system after the prototype works.</p>
-      </div>
-      <div class="proof-item">
-        <h3>Clear communication</h3>
-        <p>This site is where I’m collecting the projects, notes, and research threads that best represent how I think.</p>
-      </div>
     </div>
   </section>
 </BaseLayout>
@@ -92,7 +94,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 
   .eyebrow,
   .section-kicker,
-  .highlight-label,
+  .summary-label,
   .card-tag {
     font-size: 10px;
     letter-spacing: 0.16em;
@@ -152,37 +154,36 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
     color: var(--color-text);
   }
 
-  .highlights,
-  .cards,
-  .proof-grid {
+  .summary,
+  .cards {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .highlights {
+  .summary {
     border-top: 0.5px solid var(--color-border);
     border-bottom: 0.5px solid var(--color-border);
   }
 
-  .highlight,
+  .summary-item,
   .card,
-  .proof-item {
+  .feature-card {
     padding: 24px var(--space-page);
   }
 
-  .highlight,
+  .summary-item,
   .card {
     border-right: 0.5px solid var(--color-border);
   }
 
-  .highlight:last-child,
+  .summary-item:last-child,
   .card:last-child {
     border-right: none;
   }
 
-  .highlight p,
+  .summary-item p,
   .card p,
-  .proof-item p {
+  .feature-card p {
     margin-top: 10px;
     font-size: 12px;
     line-height: 1.8;
@@ -216,12 +217,26 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
     transition: background 0.12s ease;
   }
 
+  .feature-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) minmax(220px, 1fr);
+    gap: 24px;
+    border-top: 0.5px solid var(--color-border);
+    border-bottom: 0.5px solid var(--color-border);
+    color: inherit;
+    transition: background 0.12s ease;
+  }
+
   .card:hover {
     background: rgba(128, 128, 120, 0.04);
   }
 
+  .feature-card:hover {
+    background: rgba(128, 128, 120, 0.04);
+  }
+
   .card h3,
-  .proof-item h3 {
+  .feature-card h3 {
     margin-top: 12px;
     font-family: var(--font-serif);
     font-size: 22px;
@@ -229,40 +244,41 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
     line-height: 1.2;
   }
 
-  .proof {
-    padding-bottom: 56px;
+  .feature-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 8px;
   }
 
-  .proof-grid {
-    border-top: 0.5px solid var(--color-border);
-  }
-
-  .proof-item {
-    border-right: 0.5px solid var(--color-border);
-  }
-
-  .proof-item:last-child {
-    border-right: none;
+  .feature-meta span {
+    border: 0.5px solid var(--color-border-mid);
+    padding: 5px 9px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
   }
 
   @media (max-width: 860px) {
-    .highlights,
-    .cards,
-    .proof-grid {
+    .summary,
+    .cards {
       grid-template-columns: 1fr;
     }
 
-    .highlight,
-    .card,
-    .proof-item {
+    .summary-item,
+    .card {
       border-right: none;
       border-bottom: 0.5px solid var(--color-border);
     }
 
-    .highlights .highlight:last-child,
-    .cards .card:last-child,
-    .proof-grid .proof-item:last-child {
+    .summary .summary-item:last-child,
+    .cards .card:last-child {
       border-bottom: none;
+    }
+
+    .feature-card {
+      grid-template-columns: 1fr;
     }
   }
 </style>

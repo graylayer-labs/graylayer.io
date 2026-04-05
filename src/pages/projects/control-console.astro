@@ -1,0 +1,152 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+---
+
+<BaseLayout
+  title="Control Console"
+  description="Dummy project page for a control console used to manage RL experiments, compare runs, and inspect evaluation output."
+>
+  <PageHeader
+    tag="Dummy Project"
+    title="Control Console for RL Experiments"
+    description="A placeholder case study used to shape the portfolio structure. The content is illustrative, but the page layout is intended to stay."
+  />
+
+  <section class="project-grid">
+    <article class="project-main">
+      <div class="project-block">
+        <span class="block-label">Problem</span>
+        <p>
+          Experiment workflows tend to sprawl. Configuration lives in one place, run metadata in
+          another, and evaluation results in a third. This dummy project stands in for a tool that
+          gives a single view of experiments, metrics, and artifacts.
+        </p>
+      </div>
+
+      <div class="project-block">
+        <span class="block-label">System</span>
+        <p>
+          The system collects experiment metadata, stores run history, and exposes a small web UI
+          for comparing runs and tracing results back to code and config. The point of the page is
+          to show the level of detail I want for real project write-ups.
+        </p>
+      </div>
+
+      <div class="project-block">
+        <span class="block-label">Implementation notes</span>
+        <ul>
+          <li>FastAPI service for run metadata and experiment APIs</li>
+          <li>Postgres for structured run storage and queryable comparisons</li>
+          <li>Background workers for metric ingestion and artifact indexing</li>
+          <li>Small frontend for run comparison, filtering, and evaluation views</li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="project-side">
+      <div class="side-block">
+        <span class="block-label">Status</span>
+        <p>Placeholder project for design and content decisions.</p>
+      </div>
+
+      <div class="side-block">
+        <span class="block-label">Tech</span>
+        <ul>
+          <li>Python</li>
+          <li>FastAPI</li>
+          <li>Postgres</li>
+          <li>TypeScript</li>
+        </ul>
+      </div>
+
+      <div class="side-block">
+        <span class="block-label">What this page tests</span>
+        <ul>
+          <li>Can a visitor understand the problem quickly?</li>
+          <li>Is the implementation section concrete enough?</li>
+          <li>Does the page make you want to inspect code next?</li>
+        </ul>
+      </div>
+
+      <div class="side-block">
+        <span class="block-label">Navigation</span>
+        <ul>
+          <li><a href="/projects">Back to projects</a></li>
+          <li><a href="/research">Research page</a></li>
+          <li><a href="/about">About page</a></li>
+        </ul>
+      </div>
+    </aside>
+  </section>
+</BaseLayout>
+
+<style>
+  .project-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) minmax(280px, 1fr);
+    border-top: 0.5px solid var(--color-border);
+  }
+
+  .project-main,
+  .project-side {
+    padding: 32px var(--space-page) 56px;
+  }
+
+  .project-main {
+    border-right: 0.5px solid var(--color-border);
+  }
+
+  .project-block + .project-block,
+  .side-block + .side-block {
+    margin-top: 28px;
+    padding-top: 28px;
+    border-top: 0.5px solid var(--color-border);
+  }
+
+  .block-label {
+    display: block;
+    margin-bottom: 14px;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .project-main p,
+  .project-main li,
+  .project-side p,
+  .project-side li {
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--color-text-muted);
+    font-weight: 300;
+  }
+
+  .project-main ul,
+  .project-side ul {
+    padding-left: 18px;
+  }
+
+  .project-main li + li,
+  .project-side li + li {
+    margin-top: 10px;
+  }
+
+  .project-side a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--color-border-mid);
+  }
+
+  @media (max-width: 860px) {
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .project-main {
+      border-right: none;
+      border-bottom: 0.5px solid var(--color-border);
+    }
+  }
+</style>
