@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
 
 interface Repo {
   id: number;
@@ -8,7 +9,6 @@ interface Repo {
   description: string | null;
   html_url: string;
   stargazers_count: number;
-  forks_count: number;
   language: string | null;
   topics: string[];
   updated_at: string;
@@ -27,7 +27,6 @@ try {
       headers: {
         Accept: 'application/vnd.github+json',
         'X-GitHub-Api-Version': '2022-11-28',
-        // Set GITHUB_TOKEN env var at build time to avoid rate limits
         ...(import.meta.env.GITHUB_TOKEN
           ? { Authorization: `Bearer ${import.meta.env.GITHUB_TOKEN}` }
           : {}),
@@ -47,94 +46,174 @@ try {
   fetchError = true;
 }
 
-const languageColors: Record<string, string> = {
-  Python: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
-  TypeScript: 'bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300',
-  JavaScript: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300',
-  Rust: 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300',
-  Go: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300',
-  Shell: 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300',
-};
-
-const langClass = (lang: string | null) =>
-  lang ? (languageColors[lang] ?? 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300') : '';
+const fmtDate = (d: string) =>
+  new Date(d).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
 ---
 
 <BaseLayout
   title="Projects"
-  description="Open-source projects and experiments from graylayer-labs."
+  description="Tooling and experiments from graylayer-labs."
 >
-  <div class="mb-10">
-    <h1 class="text-3xl font-bold tracking-tight mb-3">Projects</h1>
-    <p class="text-gray-500 dark:text-gray-400">
-      Open-source work from{' '}
-      <a href="https://github.com/graylayer-labs" class="link" target="_blank" rel="noopener">
-        graylayer-labs
-      </a>.
-      Fetched live from the GitHub API at build time.
-    </p>
-  </div>
+  <PageHeader
+    tag="Projects"
+    title="Open source."
+    description="Tooling and experiments from graylayer-labs."
+  />
 
-  {fetchError && (
-    <div class="rounded-lg border border-yellow-200 dark:border-yellow-800 bg-yellow-50 dark:bg-yellow-900/20 p-4 text-sm text-yellow-800 dark:text-yellow-200 mb-8">
-      Could not fetch repos from GitHub at build time. Check the org name or set a{' '}
-      <code class="font-mono">GITHUB_TOKEN</code> env var to avoid rate limits.
+  <hr style="border: none; border-top: 0.5px solid var(--color-border); margin: 0 var(--space-page);" />
+
+  <section class="content-area">
+    {fetchError && (
+      <p class="fallback">
+        Repos temporarily unavailable. View directly on{' '}
+        <a href="https://github.com/graylayer-labs" target="_blank" rel="noopener">GitHub</a>.
+      </p>
+    )}
+
+    {repos.length === 0 && !fetchError && (
+      <p class="fallback">No public repositories found.</p>
+    )}
+
+    {repos.length > 0 && (
+      <div class="repo-list">
+        {repos.map((repo) => (
+          <a href={repo.html_url} class="repo-item" target="_blank" rel="noopener noreferrer">
+            <div class="repo-top">
+              <span class="repo-name">{repo.name}</span>
+              {repo.language && <span class="repo-lang">{repo.language}</span>}
+            </div>
+            {repo.description && <p class="repo-desc">{repo.description}</p>}
+            <div class="repo-meta">
+              {repo.stargazers_count > 0 && <span>{repo.stargazers_count} stars</span>}
+              <span>Updated {fmtDate(repo.updated_at)}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    )}
+  </section>
+
+  <div class="status-bar">
+    <div class="status-item">
+      <span class="status-dot"></span>
+      <span>Active — Lang Control RL</span>
     </div>
-  )}
-
-  {repos.length === 0 && !fetchError && (
-    <p class="text-gray-500 dark:text-gray-400 text-sm">No public repositories found.</p>
-  )}
-
-  <div class="grid gap-4">
-    {repos.map((repo) => (
-      <a
-        href={repo.html_url}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="card flex flex-col gap-3 group no-underline"
-      >
-        <div class="flex items-start justify-between gap-4">
-          <h2 class="font-mono font-medium text-gray-900 dark:text-gray-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-            {repo.name}
-          </h2>
-          <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 shrink-0">
-            {repo.stargazers_count > 0 && (
-              <span class="flex items-center gap-1">
-                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 16 16">
-                  <path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/>
-                </svg>
-                {repo.stargazers_count}
-              </span>
-            )}
-            {repo.forks_count > 0 && (
-              <span class="flex items-center gap-1">
-                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 16 16">
-                  <path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"/>
-                </svg>
-                {repo.forks_count}
-              </span>
-            )}
-          </div>
-        </div>
-
-        {repo.description && (
-          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-            {repo.description}
-          </p>
-        )}
-
-        <div class="flex flex-wrap gap-2 mt-auto pt-1">
-          {repo.language && (
-            <span class:list={['badge', langClass(repo.language)]}>
-              {repo.language}
-            </span>
-          )}
-          {repo.topics.slice(0, 4).map((topic) => (
-            <span class="badge">{topic}</span>
-          ))}
-        </div>
-      </a>
-    ))}
+    <div class="status-links">
+      <a href="https://github.com/graylayer-labs" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/eoin-mcallister-ml" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
   </div>
 </BaseLayout>
+
+<style>
+  .content-area {
+    min-height: 200px;
+  }
+
+  .fallback {
+    padding: 40px var(--space-page);
+    font-size: 13px;
+    color: var(--color-text-muted);
+    font-weight: 300;
+  }
+
+  .fallback a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .repo-list {
+    border-top: 0.5px solid var(--color-border);
+  }
+
+  .repo-item {
+    display: block;
+    padding: 20px var(--space-page);
+    border-bottom: 0.5px solid var(--color-border);
+    transition: background 0.1s;
+  }
+
+  .repo-item:hover {
+    background: rgba(128, 128, 120, 0.04);
+  }
+
+  .repo-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .repo-name {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .repo-lang {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+    border: 0.5px solid var(--color-border-mid);
+    padding: 2px 7px;
+  }
+
+  .repo-desc {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    font-weight: 300;
+    line-height: 1.65;
+    margin-bottom: 8px;
+  }
+
+  .repo-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--color-text-faint);
+  }
+
+  .status-bar {
+    border-top: 0.5px solid var(--color-border);
+    padding: 14px var(--space-page);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--color-text-faint);
+  }
+
+  .status-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #3B6D11;
+    flex-shrink: 0;
+  }
+
+  .status-links {
+    display: flex;
+    gap: 18px;
+  }
+
+  .status-links a {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .status-links a:hover {
+    color: var(--color-text);
+  }
+</style>
