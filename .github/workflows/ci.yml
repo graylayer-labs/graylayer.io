@@ -14,28 +14,8 @@ concurrency:
 
 jobs:
   checks:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run check
-      - run: npm run build
-        env:
-          # The build reads public repo data from the GitHub API.
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  # The org's shared CI (graylayer-labs/.github, ci-node.yml). Reports as
-  # "checks / checks". Runs beside the inline job above until main requires
-  # "checks / checks" (#10); then the inline job is removed.
-  shared:
-    name: checks
+    # The org's shared CI (graylayer-labs/.github, ci-node.yml). Reports as
+    # "checks / checks", the required check on main.
     permissions:
       contents: read
     uses: graylayer-labs/.github/.github/workflows/ci-node.yml@8c9fa19473d67349548fa516aa01fe4753e07003 # v1.0.0
