@@ -19,10 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-Scope: the MIT licence above covers the source code in this repository only.
-The written content of the site (the about page, blog posts and other prose
-under src/content and src/pages) is Copyright (c) 2026 Eoin McAllister, all
-rights reserved, and is not licensed under MIT.
