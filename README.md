@@ -12,6 +12,8 @@ The site is served by Cloudflare Workers static assets on graylayer.io and www.g
 - Sitemap: `/sitemap-index.xml` (listed in `public/robots.txt`); the 404 page and example pages are excluded.
 - Post pages carry `og:type` article, published/modified time and tag meta. Every page gets the default card image `public/og-default.png` (a 1200x630 wordmark) unless it passes its own `ogImage`, and Twitter cards use `summary_large_image`.
 
+Maintainers and agents: see [`CLAUDE.md`](CLAUDE.md) for routes, the content model and the `.claude/skills/` playbooks for adding projects, posts and demos and for hosting.
+
 ## Run locally
 
 ```bash
