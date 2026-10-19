@@ -1,0 +1,281 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ExampleBadge from '@/components/ExampleBadge.astro';
+import Demo from '@/components/Demo.astro';
+import { render } from 'astro:content';
+import { fmtDate, getPosts, getProjects, postHref, readMinutes, statusLabel } from '@/lib/site';
+
+export async function getStaticPaths() {
+  return (await getProjects()).map((project) => ({ params: { project: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const posts = (await getPosts(project.id)).reverse();
+const { Content } = await render(project);
+const hasBody = Boolean(project.body?.trim());
+
+const resources = [
+  { label: 'GitHub repository', url: data.links.repo },
+  { label: 'Paper / preprint', url: data.links.paper },
+  { label: 'Dataset', url: data.links.dataset },
+  { label: 'Model weights', url: data.links.weights },
+].filter((r) => r.url);
+---
+
+<BaseLayout title={data.title} description={data.summary} accent={data.accent}>
+  <div class="band">
+    <section class="wrap hero">
+      <a href="/projects/" class="back">← All projects</a>
+      <div class="row">
+        <div class="titles">
+          {data.example && <p class="badge-row"><ExampleBadge /></p>}
+          <p class="status">{statusLabel(project)}{data.since && ` · since ${data.since}`}</p>
+          <h1 class="h1 name">{data.title}</h1>
+          <p class="sum">{data.summary}</p>
+        </div>
+        <div class="actions">
+          {data.demos.length > 0 && <a href="#demo" class="btn btn-accent">Try the demo</a>}
+          {data.links.repo && <a href={data.links.repo} class="btn btn-outline-accent">Code ↗</a>}
+          {data.links.paper && <a href={data.links.paper} class="btn btn-outline-accent">Paper ↗</a>}
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap main">
+    {(data.metrics.length > 0 || data.stack.length > 0) && (
+      <section class="stats">
+        {data.metrics.map((m) => (
+          <div class="stat"><p class="k">{m.label}</p><p class="v">{m.value}</p></div>
+        ))}
+        {data.stack.length > 0 && (
+          <div class="stat"><p class="k">Stack</p><p class="mono stack">{data.stack.join(' · ')}</p></div>
+        )}
+      </section>
+    )}
+
+    {hasBody && <div class="prose overview"><Content /></div>}
+
+    {data.demos.length > 0 && (
+      <section id="demo" class="block">
+        <h2 class="h2 sh">Demo</h2>
+        <div class="demos">
+          {data.demos.map((d) => <Demo kind={d.kind} src={d.src} caption={d.caption} />)}
+        </div>
+      </section>
+    )}
+
+    {(posts.length > 0 || resources.length > 0 || data.timeline.length > 0) && <section class="block cols">
+      {posts.length > 0 && <div class="writeups">
+        <h2 class="h2 sh">Write-ups</h2>
+        {posts.map((p) => (
+          <a href={postHref(p)} class="post">
+            <span class="num">{String(p.data.part).padStart(2, '0')}</span>
+            <span class="pbody">
+              <span class="ptitle">{p.data.title}</span>
+              <span class="pdesc">{p.data.description}</span>
+              <span class="pmeta">{fmtDate(p.data.pubDate, { day: 'numeric', month: 'short', year: 'numeric' })} · {readMinutes(p.body)} min read</span>
+            </span>
+          </a>
+        ))}
+      </div>}
+      <aside>
+        {resources.length > 0 && (
+          <div>
+            <h2 class="section-label sh">Resources</h2>
+            <div class="res">
+              {resources.map((r) => <a href={r.url}>{r.label} ↗</a>)}
+            </div>
+          </div>
+        )}
+        {data.timeline.length > 0 && (
+          <div>
+            <h2 class="section-label sh">Timeline</h2>
+            <div class="tl">
+              {data.timeline.map((t) => (
+                <span><span class="mono td">{t.date}</span><br />{t.label}</span>
+              ))}
+            </div>
+          </div>
+        )}
+      </aside>
+    </section>}
+  </div>
+</BaseLayout>
+
+<style>
+  .band {
+    background: var(--accent-tint);
+    border-bottom: 1px solid var(--accent-line);
+  }
+  .hero {
+    padding-block: 40px 48px;
+  }
+  .back {
+    font-size: 14px;
+    color: var(--accent-text);
+  }
+  .row {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .titles {
+    flex: 999 1 min(520px, 100%);
+    min-width: 0;
+  }
+  .badge-row {
+    margin-bottom: 12px;
+  }
+  .status {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--accent-text);
+  }
+  .name {
+    margin-top: 14px;
+    font-size: clamp(34px, 7vw, 52px);
+    line-height: 1.05;
+  }
+  .sum {
+    margin-top: 16px;
+    max-width: 640px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--fg-3);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .actions .btn {
+    font-size: 14px;
+  }
+  .main {
+    padding-block: 40px 96px;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+    gap: 12px;
+  }
+  .stat {
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    min-width: 0;
+  }
+  .k {
+    font-size: 13px;
+    color: var(--faint);
+  }
+  .v {
+    margin-top: 6px;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    overflow-wrap: anywhere;
+  }
+  .stack {
+    margin-top: 12px;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+  }
+  .overview {
+    margin-top: 40px;
+    max-width: 700px;
+  }
+  .block {
+    margin-top: 56px;
+  }
+  .sh {
+    margin-bottom: 12px;
+  }
+  .demos {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .cols {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 56px;
+  }
+  .writeups {
+    flex: 999 1 min(520px, 100%);
+    min-width: 0;
+  }
+  aside {
+    flex: 1 1 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    min-width: 0;
+  }
+  .post {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .num {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--accent-text);
+    padding-top: 3px;
+  }
+  .pbody {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .ptitle {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .post:hover .ptitle {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .pdesc {
+    font-size: 15px;
+    color: var(--muted);
+  }
+  .pmeta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--faint);
+  }
+  .res {
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+  }
+  .res a {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .res a:hover {
+    color: var(--accent-text);
+  }
+  .tl {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-left: 14px;
+    border-left: 2px solid var(--accent-line);
+    font-size: 14px;
+    color: var(--fg-3);
+  }
+  .td {
+    font-size: 12px;
+    color: var(--faint);
+  }
+</style>
