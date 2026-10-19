@@ -20,3 +20,11 @@ updates:
     groups:
       npm:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      # @astrojs/check 0.9.x accepts only typescript ^5 || ^6; revisit when it supports 7.
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
+      # Keep the types on the Node major that CI runs (22).
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
