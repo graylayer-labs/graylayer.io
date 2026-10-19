@@ -1,0 +1,39 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Not found">
+  <div class="box">
+    <p class="mono code">404</p>
+    <h1 class="h1 t">This page doesn't exist.</h1>
+    <p class="lede">It may have moved when the site was rebuilt. Try one of these instead.</p>
+    <div class="cta">
+      <a href="/" class="btn btn-primary">Home</a>
+      <a href="/projects/" class="btn">Projects</a>
+      <a href="/writing/" class="btn">Writing</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .box {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 120px var(--gutter);
+    text-align: center;
+  }
+  .code {
+    font-size: 14px;
+    color: var(--faint);
+  }
+  .t {
+    margin: 16px 0;
+  }
+  .cta {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+</style>

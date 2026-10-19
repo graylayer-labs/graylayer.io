@@ -1,0 +1,79 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import { getProjects } from '@/lib/site';
+
+const projects = await getProjects();
+const filters = [
+  { key: 'all', label: 'All' },
+  { key: 'active', label: 'Active' },
+  { key: 'research', label: 'Research' },
+  { key: 'engineering', label: 'Engineering' },
+];
+---
+
+<BaseLayout title="Projects" description="Each project keeps its write-ups, demos, results and code in one place.">
+  <div class="wrap page">
+    <h1 class="h1">Projects</h1>
+    <p class="lede intro">Each project keeps its write-ups, demos, results and code in one place.</p>
+
+    <div class="chips" role="group" aria-label="Filter projects">
+      {filters.map((f) => (
+        <button type="button" class="chip" data-filter={f.key} aria-pressed={f.key === 'all'}>{f.label}</button>
+      ))}
+    </div>
+
+    <div class="grid" data-grid>
+      {projects.map((p) => <ProjectCard project={p} />)}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .intro {
+    margin-top: 12px;
+    max-width: 600px;
+  }
+  .chips {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip {
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--fg);
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .chip[aria-pressed='true'] {
+    background: var(--inverse-bg);
+    border-color: var(--inverse-bg);
+    color: var(--inverse-fg);
+  }
+  .grid {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+    gap: 20px;
+  }
+</style>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const cards = document.querySelectorAll<HTMLElement>('[data-grid] > a');
+  chips.forEach((chip) =>
+    chip.addEventListener('click', () => {
+      const key = chip.dataset.filter;
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+      cards.forEach((card) => {
+        const show = key === 'all' || card.dataset.status === key || card.dataset.category === key;
+        card.hidden = !show;
+      });
+    }),
+  );
+</script>
