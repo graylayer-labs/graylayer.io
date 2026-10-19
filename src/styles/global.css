@@ -24,6 +24,76 @@
   }
 }
 
+/* Design tokens. Light is the default; dark follows the OS unless the
+   toggle sets data-theme on <html>. Per-project accent: set --accent on an
+   element (from the project entry) and the derived tokens follow. */
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #fafafa;
+  --surface-2: #f5f5f5;
+  --fg: #0a0a0a;
+  --fg-2: #262626;
+  --fg-3: #404040;
+  --muted: #525252;
+  --faint: #737373;
+  --border: #e5e5e5;
+  --border-soft: #f5f5f5;
+  --inverse-bg: #0a0a0a;
+  --inverse-fg: #ffffff;
+  --ok: #059669;
+
+  --accent: #0a0a0a;
+  --accent-text: color-mix(in srgb, var(--accent) 78%, black);
+  --accent-tint: color-mix(in srgb, var(--accent) 8%, var(--bg));
+  --accent-line: color-mix(in srgb, var(--accent) 24%, var(--bg));
+
+  --font-sans: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --max: 1080px;
+  --gutter: 24px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --surface-2: #1f1f1f;
+    --fg: #fafafa;
+    --fg-2: #e5e5e5;
+    --fg-3: #d4d4d4;
+    --muted: #a3a3a3;
+    --faint: #8a8a8a;
+    --border: #262626;
+    --border-soft: #1f1f1f;
+    --inverse-bg: #fafafa;
+    --inverse-fg: #0a0a0a;
+    --accent-text: color-mix(in srgb, var(--accent) 62%, white);
+    --accent-tint: color-mix(in srgb, var(--accent) 12%, var(--bg));
+    --accent-line: color-mix(in srgb, var(--accent) 30%, var(--bg));
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --surface-2: #1f1f1f;
+  --fg: #fafafa;
+  --fg-2: #e5e5e5;
+  --fg-3: #d4d4d4;
+  --muted: #a3a3a3;
+  --faint: #8a8a8a;
+  --border: #262626;
+  --border-soft: #1f1f1f;
+  --inverse-bg: #fafafa;
+  --inverse-fg: #0a0a0a;
+  --accent-text: color-mix(in srgb, var(--accent) 62%, white);
+  --accent-tint: color-mix(in srgb, var(--accent) 12%, var(--bg));
+  --accent-line: color-mix(in srgb, var(--accent) 30%, var(--bg));
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -150,4 +220,117 @@ a {
   border: none;
   border-top: 0.5px solid var(--color-border);
   margin: 2.5em 0;
+}
+
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+.page {
+  padding-block: 72px 96px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--faint);
+}
+
+.h1 {
+  font-size: clamp(34px, 6vw, 48px);
+  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.h2 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.lede {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.btn:hover {
+  background: var(--surface-2);
+}
+
+.btn-primary {
+  background: var(--inverse-bg);
+  border-color: var(--inverse-bg);
+  color: var(--inverse-fg);
+}
+
+.btn-primary:hover {
+  background: var(--inverse-bg);
+  opacity: 0.85;
+}
+
+.btn-accent {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.btn-accent:hover {
+  background: var(--accent);
+  opacity: 0.88;
+}
+
+.btn-outline-accent {
+  border-color: var(--accent-line);
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.list-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px 24px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.list-row:hover .list-title {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--faint);
 }
