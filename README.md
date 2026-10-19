@@ -4,9 +4,7 @@ Source for [graylayer.io](https://graylayer.io), the Graylayer Labs website. Bui
 
 ## Hosting
 
-The site is moving from GitHub Pages to Cloudflare Workers static assets (#21). Cloudflare's Git integration builds every push: `npm run build`, then `npx wrangler deploy` using [`wrangler.jsonc`](wrangler.jsonc), which serves `dist/`. Pushes to `main` deploy production; other branches and PRs get preview URLs. Response headers live in [`public/_headers`](public/_headers). DNS for graylayer.io is on Cloudflare; the domain stays registered at Squarespace.
-
-Until the cutover in #21 is done, GitHub Pages (`.github/workflows/deploy.yml`, `public/CNAME`) still serves graylayer.io.
+The site is served by Cloudflare Workers static assets on graylayer.io and www.graylayer.io (custom domains in `wrangler.jsonc`). Cloudflare's Git integration builds every push: `npm run build`, then `npx wrangler deploy` using [`wrangler.jsonc`](wrangler.jsonc), which serves `dist/`. Pushes to `main` deploy production; other branches and PRs get preview URLs. Response headers live in [`public/_headers`](public/_headers). DNS for graylayer.io is on Cloudflare; the domain stays registered at Squarespace.
 
 ## Run locally
 
