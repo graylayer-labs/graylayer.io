@@ -6,6 +6,13 @@ import { getPosts, postHref } from '@/lib/site';
 
 const md = new MarkdownIt({ html: true });
 
+function absolute(attribs: Record<string, string>, name: string, site: URL) {
+  const value = attribs[name];
+  return value?.startsWith('/') && !value.startsWith('//')
+    ? { ...attribs, [name]: new URL(value, site).href }
+    : attribs;
+}
+
 // Same visibility helper as the pages: drafts and (in production) example
 // posts are not returned, so they never reach the feed. With no posts the
 // feed is a valid empty channel.
@@ -23,6 +30,11 @@ export async function GET(context: APIContext) {
       categories: post.data.tags,
       content: sanitizeHtml(md.render(post.body ?? ''), {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
+        // Feed readers have no base URL, so root-relative links must be absolute.
+        transformTags: {
+          a: (tag, attribs) => ({ tagName: tag, attribs: absolute(attribs, 'href', context.site!) }),
+          img: (tag, attribs) => ({ tagName: tag, attribs: absolute(attribs, 'src', context.site!) }),
+        },
       }),
     })),
   });
