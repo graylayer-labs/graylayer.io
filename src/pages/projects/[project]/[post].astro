@@ -1,0 +1,151 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ExampleBadge from '@/components/ExampleBadge.astro';
+import { getEntry, render } from 'astro:content';
+import { fmtDate, getPosts, postHref, postSlug, projectHref, readMinutes } from '@/lib/site';
+
+export async function getStaticPaths() {
+  return (await getPosts()).map((post) => ({
+    params: { project: post.data.project.id, post: postSlug(post) },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const project = (await getEntry(post.data.project))!;
+const siblings = await getPosts(project.id);
+const idx = siblings.findIndex((p) => p.id === post.id);
+const prev = siblings[idx - 1];
+const next = siblings[idx + 1];
+const { Content } = await render(post);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description} accent={project.data.accent}>
+  <div class="bar"></div>
+  <article class="art">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/projects/">Projects</a><span>/</span>
+      <a href={projectHref(project)} class="proj">{project.data.title}</a><span>/</span>
+      <span>Part {post.data.part} of {siblings.length}</span>
+    </nav>
+    {project.data.example && <p class="badge-row"><ExampleBadge /></p>}
+    <h1 class="title">{post.data.title}</h1>
+    <p class="desc">{post.data.description}</p>
+    <div class="meta mono">
+      <span>{fmtDate(post.data.pubDate, { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+      <span>{readMinutes(post.body)} min read</span>
+      {post.data.tags.map((t) => <span>#{t}</span>)}
+    </div>
+
+    <div class="prose body"><Content /></div>
+
+    <div class="pn">
+      {prev ? (
+        <a href={postHref(prev)} class="pcard"><span class="d">← Part {prev.data.part}</span><span class="t">{prev.data.title}</span></a>
+      ) : <span></span>}
+      {next && (
+        <a href={postHref(next)} class="pcard right"><span class="d">Part {next.data.part} →</span><span class="t">{next.data.title}</span></a>
+      )}
+    </div>
+    <a href={projectHref(project)} class="back">
+      <span><span class="t">{project.data.title}</span><br /><span class="sub">Demo, results and code</span></span>
+      <span class="go">Project →</span>
+    </a>
+  </article>
+</BaseLayout>
+
+<style>
+  .bar {
+    height: 3px;
+    background: var(--accent);
+  }
+  .art {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 48px var(--gutter) 96px;
+  }
+  .crumbs {
+    font-size: 14px;
+    color: var(--faint);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .proj {
+    color: var(--fg);
+  }
+  .badge-row {
+    margin-top: 20px;
+  }
+  .title {
+    margin-top: 24px;
+    font-size: clamp(30px, 6vw, 44px);
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    overflow-wrap: break-word;
+  }
+  .desc {
+    margin-top: 16px;
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .meta {
+    margin-top: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--faint);
+  }
+  .body {
+    margin-top: 36px;
+  }
+  .pn {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+    gap: 12px;
+  }
+  .pcard {
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .pcard:hover {
+    border-color: var(--accent-line);
+  }
+  .pcard.right {
+    text-align: right;
+  }
+  .d {
+    font-size: 13px;
+    color: var(--faint);
+  }
+  .t {
+    font-weight: 600;
+  }
+  .back {
+    margin-top: 16px;
+    padding: 18px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    background: var(--accent-tint);
+    border-radius: 12px;
+  }
+  .sub {
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .go {
+    color: var(--accent-text);
+    align-self: center;
+  }
+</style>
