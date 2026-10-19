@@ -1,227 +1,69 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getCv, getProjects, projectHref } from '@/lib/site';
+import { render } from 'astro:content';
+import { getAbout } from '@/lib/site';
 
-const cv = await getCv();
-const featured = (await getProjects()).filter((p) => p.data.featured);
+const entry = await getAbout();
+const { data } = entry;
+const { Content } = await render(entry);
 ---
 
-<BaseLayout title="About" description={`${cv.name}: ${cv.headline}`}>
-  <div class="wrap page layout">
-    <aside>
-      <div class="photo mono">[PHOTO]</div>
-      <div>
-        <h1 class="name">{cv.name}</h1>
-        <p class="hl">{cv.headline}</p>
-        <p class="loc mono">{cv.location}</p>
-      </div>
+<BaseLayout
+  title="About"
+  description={`${data.name}, ${data.title.toLowerCase()} in Dublin, focused on model design from choosing the right model to production.`}
+>
+  <div class="wrap page">
+    <p class="eyebrow">{data.location}</p>
+    <h1 class="h1 name">{data.name}</h1>
+    <p class="lede role">{data.title}</p>
+
+    <div class="prose bio"><Content /></div>
+
+    <section class="block">
+      <h2 class="section-label sh">What I work with</h2>
+      {data.skills.map((g) => (
+        <div class="sg">
+          <p class="gl">{g.label}</p>
+          <div class="skills">{g.items.map((i) => <span>{i}</span>)}</div>
+        </div>
+      ))}
+    </section>
+
+    <section class="block">
+      <h2 class="section-label sh">Elsewhere</h2>
       <div class="links">
-        {cv.links.map((l) => <a href={l.url}>{l.label} ↗</a>)}
+        {data.links.map((l) => <a href={l.url}>{l.label} ↗</a>)}
       </div>
-      <a href={cv.cv_pdf} class="btn btn-primary dl">Download CV (PDF)</a>
-      <p class="open"><span class="ok">●</span> Open to: {cv.open_to}</p>
-    </aside>
-
-    <div class="col">
-      <p class="intro">{cv.intro}</p>
-
-      <section>
-        <h2 class="section-label sh">Experience</h2>
-        {cv.experience.map((e) => (
-          <div class="job">
-            <span class="per mono">{e.period}</span>
-            <div class="jb">
-              <span class="role">{e.role} <span class="emp">· {e.employer}</span></span>
-              {e.highlights.length > 0 && <ul>{e.highlights.map((h) => <li>{h}</li>)}</ul>}
-            </div>
-          </div>
-        ))}
-      </section>
-
-      <section>
-        <h2 class="section-label sh">Selected projects</h2>
-        <div class="proj">
-          {featured.map((p) => (
-            <a href={projectHref(p)} class="pc" style={`--accent:${p.data.accent}`}>
-              <span class="pn">{p.data.title}</span>
-              <span class="ps">{p.data.summary}</span>
-            </a>
-          ))}
-        </div>
-      </section>
-
-      <section class="two">
-        <div>
-          <h2 class="section-label sh">Education</h2>
-          {cv.education.map((e) => (
-            <>
-              <p class="deg">{e.degree}</p>
-              <p class="inst">{e.institution} · {e.year}</p>
-            </>
-          ))}
-        </div>
-        <div>
-          <h2 class="section-label sh">Skills</h2>
-          <div class="skills">{cv.skills.map((s) => <span>{s}</span>)}</div>
-        </div>
-      </section>
-
-      <section>
-        <h2 class="section-label sh">Publications and talks</h2>
-        {cv.publications.map((p) => (
-          <p class="pub">{p.citation} {p.url && <a href={p.url}>PDF</a>}</p>
-        ))}
-      </section>
-    </div>
+    </section>
   </div>
 </BaseLayout>
 
 <style>
-  .layout {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 64px;
-  }
-  aside {
-    flex: 1 1 260px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    min-width: 0;
-  }
-  .photo {
-    width: 112px;
-    height: 112px;
-    border-radius: 999px;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    color: var(--faint);
+  .page {
+    max-width: 760px;
   }
   .name {
-    font-size: 32px;
-    font-weight: 600;
-    letter-spacing: -0.025em;
+    margin-top: 12px;
   }
-  .hl {
+  .role {
     margin-top: 8px;
-    color: var(--muted);
   }
-  .loc {
-    margin-top: 8px;
-    font-size: 13px;
-    color: var(--faint);
+  .bio {
+    margin-top: 40px;
   }
-  .links {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    font-size: 15px;
-  }
-  .links a {
-    padding: 6px 0;
-    color: var(--muted);
-  }
-  .links a:hover {
-    color: var(--fg);
-  }
-  .dl {
-    align-self: flex-start;
-  }
-  .open {
-    padding: 14px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    font-size: 14px;
-    color: var(--muted);
-  }
-  .ok {
-    color: var(--ok);
-  }
-  .col {
-    flex: 999 1 min(560px, 100%);
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 56px;
-  }
-  .intro {
-    font-size: 19px;
-    line-height: 1.65;
-    color: var(--fg-2);
+  .block {
+    margin-top: 48px;
   }
   .sh {
     margin-bottom: 16px;
   }
-  .job {
-    display: grid;
-    grid-template-columns: 130px minmax(0, 1fr);
-    gap: 4px 24px;
-    padding: 22px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .per {
-    font-size: 13px;
-    color: var(--faint);
-    padding-top: 3px;
-  }
-  .jb {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .role {
-    font-size: 17px;
-    font-weight: 600;
-  }
-  .emp {
-    font-weight: 400;
-    color: var(--muted);
-  }
-  ul {
-    margin: 0;
-    padding-left: 18px;
-    color: var(--fg-3);
-    font-size: 15px;
-    line-height: 1.6;
-  }
-  .proj {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
-    gap: 12px;
-  }
-  .pc {
-    padding: 16px;
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .pn {
-    font-weight: 600;
-  }
-  .ps {
+  .gl {
+    margin-bottom: 8px;
     font-size: 14px;
-    color: var(--muted);
+    font-weight: 500;
   }
-  .two {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
-    gap: 48px;
-  }
-  .deg {
-    font-size: 16px;
-    font-weight: 600;
-  }
-  .inst {
-    margin-top: 4px;
-    font-size: 15px;
-    color: var(--muted);
+  .sg + .sg {
+    margin-top: 16px;
   }
   .skills {
     display: flex;
@@ -234,17 +76,16 @@ const featured = (await getProjects()).filter((p) => p.data.featured);
     background: var(--surface-2);
     border-radius: 6px;
   }
-  .pub {
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
     font-size: 15px;
-    color: var(--fg-3);
-    line-height: 1.6;
   }
-  .pub a {
-    text-decoration: underline;
+  .links a {
+    color: var(--muted);
   }
-  @media (max-width: 600px) {
-    .job {
-      grid-template-columns: minmax(0, 1fr);
-    }
+  .links a:hover {
+    color: var(--fg);
   }
 </style>

@@ -1,4 +1,5 @@
 ---
+import ExampleBadge from '@/components/ExampleBadge.astro';
 import { getPosts, projectHref, statusLabel, type Project } from '@/lib/site';
 
 interface Props {
@@ -23,10 +24,11 @@ const parts = [
   data-category={data.category}
 >
   <div class="cover">
-    {data.cover ? <img src={data.cover} alt="" loading="lazy" /> : <span>[cover figure]</span>}
+    {data.cover && <img src={data.cover} alt="" loading="lazy" />}
   </div>
   <div class="body">
     <span class:list={['meta', { live: data.status === 'active' }]}>{statusLabel(project)}</span>
+    {data.example && <span><ExampleBadge /></span>}
     <span class="title">{data.title}</span>
     <span class="summary">{data.summary}</span>
     {parts.length > 0 && <span class="foot">{parts.join(' · ')}</span>}

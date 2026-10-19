@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import ExampleBadge from '@/components/ExampleBadge.astro';
 import Demo from '@/components/Demo.astro';
 import { render } from 'astro:content';
 import { fmtDate, getPosts, getProjects, postHref, readMinutes, statusLabel } from '@/lib/site';
@@ -28,6 +29,7 @@ const resources = [
       <a href="/projects/" class="back">← All projects</a>
       <div class="row">
         <div class="titles">
+          {data.example && <p class="badge-row"><ExampleBadge /></p>}
           <p class="status">{statusLabel(project)}{data.since && ` · since ${data.since}`}</p>
           <h1 class="h1 name">{data.title}</h1>
           <p class="sum">{data.summary}</p>
@@ -64,10 +66,9 @@ const resources = [
       </section>
     )}
 
-    <section class="block cols">
-      <div class="writeups">
+    {(posts.length > 0 || resources.length > 0 || data.timeline.length > 0) && <section class="block cols">
+      {posts.length > 0 && <div class="writeups">
         <h2 class="h2 sh">Write-ups</h2>
-        {posts.length === 0 && <p class="lede">No posts yet.</p>}
         {posts.map((p) => (
           <a href={postHref(p)} class="post">
             <span class="num">{String(p.data.part).padStart(2, '0')}</span>
@@ -78,7 +79,7 @@ const resources = [
             </span>
           </a>
         ))}
-      </div>
+      </div>}
       <aside>
         {resources.length > 0 && (
           <div>
@@ -99,7 +100,7 @@ const resources = [
           </div>
         )}
       </aside>
-    </section>
+    </section>}
   </div>
 </BaseLayout>
 
@@ -126,6 +127,9 @@ const resources = [
   .titles {
     flex: 999 1 min(520px, 100%);
     min-width: 0;
+  }
+  .badge-row {
+    margin-bottom: 12px;
   }
   .status {
     font-family: var(--font-mono);

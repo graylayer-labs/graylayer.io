@@ -20,6 +20,8 @@ const projects = defineCollection({
     accent: hex,
     since: z.string().optional(),
     featured: z.boolean().default(false),
+    // Made-up demo project: only built in dev or with SHOW_EXAMPLES=true.
+    example: z.boolean().default(false),
     cover: z.string().optional(),
     stack: z.array(z.string()).default([]),
     links: z
@@ -63,28 +65,15 @@ const posts = defineCollection({
 
 const link = z.object({ label: z.string(), url: z.string() });
 
-const cv = defineCollection({
-  loader: glob({ pattern: 'cv.yaml', base: './src/data' }),
+const about = defineCollection({
+  loader: glob({ pattern: 'about.md', base: './src/content' }),
   schema: z.object({
     name: z.string(),
-    headline: z.string(),
+    title: z.string(),
     location: z.string(),
-    intro: z.string(),
-    open_to: z.string(),
-    cv_pdf: z.string(),
+    skills: z.array(z.object({ label: z.string(), items: z.array(z.string()) })),
     links: z.array(link),
-    experience: z.array(
-      z.object({
-        period: z.string(),
-        role: z.string(),
-        employer: z.string(),
-        highlights: z.array(z.string()).default([]),
-      }),
-    ),
-    education: z.array(z.object({ degree: z.string(), institution: z.string(), year: z.string() })),
-    skills: z.array(z.string()),
-    publications: z.array(z.object({ citation: z.string(), url: z.string().optional() })),
   }),
 });
 
-export const collections = { projects, posts, cv };
+export const collections = { projects, posts, about };

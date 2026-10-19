@@ -1,14 +1,14 @@
 ---
-import { FEED_URL, getCv } from '@/lib/site';
+import { FEED_URL, getAbout } from '@/lib/site';
 
-const cv = await getCv();
-const links = [...cv.links.filter((l) => ['GitHub', 'LinkedIn', 'Email'].includes(l.label))];
+const { data: about } = await getAbout();
+const links = [...about.links.filter((l) => ['GitHub', 'LinkedIn'].includes(l.label))];
 if (FEED_URL) links.push({ label: 'RSS', url: FEED_URL });
 ---
 
 <footer>
   <div class="wrap bar">
-    <span>© {cv.name}</span>
+    <span>© {about.name}</span>
     <span class="links">
       {links.map((l) => <a href={l.url}>{l.label}</a>)}
     </span>

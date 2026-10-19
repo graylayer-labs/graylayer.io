@@ -2,9 +2,9 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ProjectCard from '@/components/ProjectCard.astro';
 import PostRow from '@/components/PostRow.astro';
-import { getCv, getPosts, getProjects } from '@/lib/site';
+import { getAbout, getPosts, getProjects } from '@/lib/site';
 
-const cv = await getCv();
+const { data: about } = await getAbout();
 const featured = (await getProjects()).filter((p) => p.data.featured);
 const posts = (await getPosts()).slice(0, 3);
 ---
@@ -12,14 +12,14 @@ const posts = (await getPosts()).slice(0, 3);
 <BaseLayout title="Home">
   <div class="wrap page">
     <section class="hero">
-      <p class="eyebrow">{cv.name} · ML engineer · Dublin</p>
-      <h1 class="h1 big">I build reinforcement learning systems and write up what I learn.</h1>
+      <p class="eyebrow">{about.name} · {about.title} · Dublin</p>
+      <h1 class="h1 big">I design machine learning models, from choosing the right one to running it in production.</h1>
       <p class="lede">
-        Evaluation, training infrastructure and production ML. Each project has its write-ups, demos and code in one place.
+        I pick the model that fits the data problem, then take it through evaluation, pipelines and deployment. Each project here has its write-ups, demos and code in one place.
       </p>
       <div class="cta">
         <a href="/projects/" class="btn btn-primary">See projects</a>
-        <a href="/about/" class="btn">About me / CV</a>
+        <a href="/about/" class="btn">About me</a>
       </div>
     </section>
 
@@ -38,9 +38,9 @@ const posts = (await getPosts()).slice(0, 3);
         <h2 class="h2">Latest writing</h2>
         <a href="/writing/" class="more">All posts →</a>
       </div>
-      <div>
+      {posts.length === 0 ? <p class="empty">No posts yet.</p> : <div>
         {posts.map((p) => <PostRow post={p} />)}
-      </div>
+      </div>}
     </section>
   </div>
 </BaseLayout>
@@ -83,6 +83,9 @@ const posts = (await getPosts()).slice(0, 3);
   }
   .more:hover {
     color: var(--fg);
+  }
+  .empty {
+    color: var(--muted);
   }
   .grid {
     display: grid;

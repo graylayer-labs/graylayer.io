@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import ExampleBadge from '@/components/ExampleBadge.astro';
 import { getEntry, render } from 'astro:content';
 import { fmtDate, getPosts, postHref, postSlug, projectHref, readMinutes } from '@/lib/site';
 
@@ -27,6 +28,7 @@ const { Content } = await render(post);
       <a href={projectHref(project)} class="proj">{project.data.title}</a><span>/</span>
       <span>Part {post.data.part} of {siblings.length}</span>
     </nav>
+    {project.data.example && <p class="badge-row"><ExampleBadge /></p>}
     <h1 class="title">{post.data.title}</h1>
     <p class="desc">{post.data.description}</p>
     <div class="meta mono">
@@ -71,6 +73,9 @@ const { Content } = await render(post);
   }
   .proj {
     color: var(--fg);
+  }
+  .badge-row {
+    margin-top: 20px;
   }
   .title {
     margin-top: 24px;
