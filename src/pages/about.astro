@@ -12,47 +12,86 @@ const { Content } = await render(entry);
   title="About"
   description={`${data.name}, ${data.title.toLowerCase()} in Dublin, focused on model design from choosing the right model to production.`}
 >
-  <div class="wrap page">
-    <p class="eyebrow">{data.location}</p>
-    <h1 class="h1 name">{data.name}</h1>
-    <p class="lede role">{data.title}</p>
-
-    <div class="prose bio"><Content /></div>
-
-    <section class="block">
-      <h2 class="section-label sh">What I work with</h2>
-      {data.skills.map((g) => (
-        <div class="sg">
-          <p class="gl">{g.label}</p>
-          <div class="skills">{g.items.map((i) => <span>{i}</span>)}</div>
-        </div>
-      ))}
-    </section>
-
-    <section class="block">
-      <h2 class="section-label sh">Elsewhere</h2>
+  <div class="wrap page layout">
+    <aside>
+      <div>
+        <h1 class="name">{data.name}</h1>
+        <p class="role">{data.title}</p>
+        <p class="mono loc">{data.location}</p>
+      </div>
       <div class="links">
         {data.links.map((l) => <a href={l.url}>{l.label} ↗</a>)}
       </div>
-    </section>
+    </aside>
+
+    <div class="main">
+      <div class="prose bio"><Content /></div>
+
+      <section>
+        <h2 class="section-label sh">What I work with</h2>
+        {data.skills.map((g) => (
+          <div class="sg">
+            <p class="gl">{g.label}</p>
+            <div class="skills">{g.items.map((i) => <span>{i}</span>)}</div>
+          </div>
+        ))}
+      </section>
+    </div>
   </div>
 </BaseLayout>
 
+
 <style>
-  .page {
-    max-width: 760px;
+  .layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 64px;
+  }
+  aside {
+    flex: 1 1 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
   }
   .name {
-    margin-top: 12px;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
   }
   .role {
     margin-top: 8px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .loc {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--faint);
+  }
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 15px;
+  }
+  .links a {
+    padding: 6px 0;
+    color: var(--muted);
+  }
+  .links a:hover {
+    color: var(--fg);
+  }
+  .main {
+    flex: 999 1 560px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
   }
   .bio {
-    margin-top: 40px;
-  }
-  .block {
-    margin-top: 48px;
+    font-size: 19px;
+    line-height: 1.65;
   }
   .sh {
     margin-bottom: 16px;
@@ -75,17 +114,5 @@ const { Content } = await render(entry);
     padding: 5px 10px;
     background: var(--surface-2);
     border-radius: 6px;
-  }
-  .links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 24px;
-    font-size: 15px;
-  }
-  .links a {
-    color: var(--muted);
-  }
-  .links a:hover {
-    color: var(--fg);
   }
 </style>
