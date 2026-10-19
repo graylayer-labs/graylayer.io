@@ -1,134 +1,91 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import PageHeader from '@/components/PageHeader.astro';
+import { render } from 'astro:content';
+import { getAbout } from '@/lib/site';
+
+const entry = await getAbout();
+const { data } = entry;
+const { Content } = await render(entry);
 ---
 
 <BaseLayout
   title="About"
-  description="About Eoin McAllister, an ML engineer working across reinforcement learning, experimentation, and production systems."
+  description={`${data.name}, ${data.title.toLowerCase()} in Dublin, focused on model design from choosing the right model to production.`}
 >
-  <PageHeader
-    tag="About"
-    title="About"
-    description="I’m an ML engineer based in Dublin, focused on reinforcement learning systems, experimental infrastructure, and production-facing ML software."
-  />
+  <div class="wrap page">
+    <p class="eyebrow">{data.location}</p>
+    <h1 class="h1 name">{data.name}</h1>
+    <p class="lede role">{data.title}</p>
 
-  <section class="about-grid">
-    <div class="about-main">
-      <p>
-        My work sits in the gap between promising ideas and reliable systems. I’m interested in
-        reinforcement learning, controllable agent behaviour, evaluation, and the engineering work
-        required to make ML useful beyond a demo.
-      </p>
-      <p>
-        I’ve worked in environments where the job is not just to train a model, but to build the
-        surrounding machinery: data flows, interfaces, experiments, tooling, and the habits that
-        make iteration faster and safer.
-      </p>
-      <p>
-        The goal of this site is simple: make it easy to understand what I work on, what I have
-        built, and how I approach engineering problems.
-      </p>
-    </div>
+    <div class="prose bio"><Content /></div>
 
-    <div class="about-side">
-      <div class="detail-block">
-        <span class="detail-label">Location</span>
-        <ul>
-          <li>Based in Dublin, Ireland</li>
-        </ul>
+    <section class="block">
+      <h2 class="section-label sh">What I work with</h2>
+      {data.skills.map((g) => (
+        <div class="sg">
+          <p class="gl">{g.label}</p>
+          <div class="skills">{g.items.map((i) => <span>{i}</span>)}</div>
+        </div>
+      ))}
+    </section>
+
+    <section class="block">
+      <h2 class="section-label sh">Elsewhere</h2>
+      <div class="links">
+        {data.links.map((l) => <a href={l.url}>{l.label} ↗</a>)}
       </div>
-
-      <div class="detail-block">
-        <span class="detail-label">Focus areas</span>
-        <ul>
-          <li>Reinforcement learning</li>
-          <li>Language-conditioned control</li>
-          <li>ML tooling and infrastructure</li>
-          <li>Production ML systems</li>
-        </ul>
-      </div>
-
-      <div class="detail-block">
-        <span class="detail-label">Links</span>
-        <ul>
-          <li><a href="/projects">Projects</a></li>
-          <li><a href="/research">Research</a></li>
-          <li><a href="https://github.com/graylayer-labs" target="_blank" rel="noopener">GitHub</a></li>
-          <li><a href="https://linkedin.com/in/eoin-mcallister-ml" target="_blank" rel="noopener">LinkedIn</a></li>
-        </ul>
-      </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </BaseLayout>
 
 <style>
-  .about-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);
-    gap: 0;
-    border-top: 0.5px solid var(--color-border);
-  }
-
-  .about-main,
-  .about-side {
-    padding: 32px var(--space-page) 56px;
-  }
-
-  .about-main {
-    border-right: 0.5px solid var(--color-border);
+  .page {
     max-width: 760px;
   }
-
-  .about-main p {
-    font-size: 13px;
-    line-height: 1.95;
-    color: var(--color-text-muted);
-    font-weight: 300;
-    margin-bottom: 20px;
+  .name {
+    margin-top: 12px;
   }
-
-  .detail-block + .detail-block {
-    margin-top: 28px;
-    padding-top: 28px;
-    border-top: 0.5px solid var(--color-border);
+  .role {
+    margin-top: 8px;
   }
-
-  .detail-label {
-    display: block;
-    margin-bottom: 14px;
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--color-text-faint);
+  .bio {
+    margin-top: 40px;
   }
-
-  .detail-block ul {
-    list-style: none;
+  .block {
+    margin-top: 48px;
   }
-
-  .detail-block li {
-    font-size: 12px;
-    line-height: 1.8;
-    color: var(--color-text-muted);
-    font-weight: 300;
+  .sh {
+    margin-bottom: 16px;
+  }
+  .gl {
     margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
   }
-
-  .detail-block a {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    text-decoration-color: var(--color-border-mid);
+  .sg + .sg {
+    margin-top: 16px;
   }
-
-  @media (max-width: 860px) {
-    .about-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .about-main {
-      border-right: none;
-      border-bottom: 0.5px solid var(--color-border);
-    }
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 13px;
+  }
+  .skills span {
+    padding: 5px 10px;
+    background: var(--surface-2);
+    border-radius: 6px;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    font-size: 15px;
+  }
+  .links a {
+    color: var(--muted);
+  }
+  .links a:hover {
+    color: var(--fg);
   }
 </style>
