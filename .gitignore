@@ -6,6 +6,7 @@ node_modules/
 .DS_Store
 .astro/
 
-.claude/
+.claude/*
+!.claude/skills/
 website/
 GrayLayer Redesign Plan.md
