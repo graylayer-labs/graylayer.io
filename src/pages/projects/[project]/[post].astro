@@ -20,7 +20,9 @@ const next = siblings[idx + 1];
 const { Content } = await render(post);
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description} accent={project.data.accent}>
+<BaseLayout title={post.data.title} description={post.data.description} accent={project.data.accent}
+  article={{ published: post.data.pubDate, modified: post.data.updatedDate, tags: post.data.tags }}
+>
   <div class="bar"></div>
   <article class="art">
     <nav class="crumbs" aria-label="Breadcrumb">
