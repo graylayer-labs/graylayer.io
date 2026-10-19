@@ -31,7 +31,7 @@ const fmt = (d: Date) =>
     ) : (
       <div class="post-list">
         {posts.map((post) => (
-          <a href={`/blog/${post.slug}`} class="post-item">
+          <a href={`/blog/${post.id}`} class="post-item">
             <span class="post-title">{post.data.title}</span>
             <time class="post-date">{fmt(post.data.pubDate)}</time>
           </a>
