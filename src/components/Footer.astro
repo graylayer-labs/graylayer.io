@@ -1,64 +1,42 @@
 ---
-const year = new Date().getFullYear();
+import { FEED_URL, getCv } from '@/lib/site';
+
+const cv = await getCv();
+const links = [...cv.links.filter((l) => ['GitHub', 'LinkedIn', 'Email'].includes(l.label))];
+if (FEED_URL) links.push({ label: 'RSS', url: FEED_URL });
 ---
 
-<footer class="site-footer">
-  <div class="footer-copy">
-    <span>© {year} Eoin McAllister</span>
-    <span>ML engineer focused on reinforcement learning and production ML systems.</span>
-  </div>
-  <div class="footer-links">
-    <a href="https://github.com/graylayer-labs" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://linkedin.com/in/eoin-mcallister-ml" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="mailto:eoinmc.james@gmail.com">Email</a>
+<footer>
+  <div class="wrap bar">
+    <span>© {cv.name}</span>
+    <span class="links">
+      {links.map((l) => <a href={l.url}>{l.label}</a>)}
+    </span>
   </div>
 </footer>
 
 <style>
-  .site-footer {
-    border-top: 0.5px solid var(--color-border);
-    padding: 18px var(--space-page);
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 24px;
+  footer {
+    border-top: 1px solid var(--border);
   }
-
-  .footer-copy {
+  .bar {
+    padding-block: 28px;
     display: flex;
-    flex-direction: column;
-    gap: 6px;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    color: var(--color-text-faint);
-    text-transform: uppercase;
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 20px;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: 14px;
+    color: var(--faint);
   }
-
-  .footer-links a {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-text-faint);
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
   }
-
-  .footer-links a:hover {
-    color: var(--color-text);
+  .links a {
+    color: var(--muted);
   }
-
-  @media (max-width: 720px) {
-    .site-footer {
-      flex-direction: column;
-    }
-
-    .footer-links {
-      justify-content: flex-start;
-    }
+  .links a:hover {
+    color: var(--fg);
   }
 </style>

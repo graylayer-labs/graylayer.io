@@ -1,0 +1,95 @@
+---
+import { getPosts, projectHref, statusLabel, type Project } from '@/lib/site';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const posts = await getPosts(project.id);
+const parts = [
+  posts.length && `${posts.length} ${posts.length === 1 ? 'post' : 'posts'}`,
+  data.demos.length && `${data.demos.length} ${data.demos.length === 1 ? 'demo' : 'demos'}`,
+  data.links.repo && 'code',
+].filter(Boolean);
+---
+
+<a
+  href={projectHref(project)}
+  class="card"
+  style={`--accent:${data.accent}`}
+  data-status={data.status}
+  data-category={data.category}
+>
+  <div class="cover">
+    {data.cover ? <img src={data.cover} alt="" loading="lazy" /> : <span>[cover figure]</span>}
+  </div>
+  <div class="body">
+    <span class:list={['meta', { live: data.status === 'active' }]}>{statusLabel(project)}</span>
+    <span class="title">{data.title}</span>
+    <span class="summary">{data.summary}</span>
+    {parts.length > 0 && <span class="foot">{parts.join(' · ')}</span>}
+  </div>
+</a>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .card:hover {
+    border-color: var(--accent-line);
+  }
+  .cover {
+    height: 180px;
+    background: var(--accent-tint);
+    border-bottom: 3px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent-text);
+  }
+  .cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-grow: 1;
+  }
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--faint);
+  }
+  .meta.live {
+    color: var(--accent-text);
+  }
+  .title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .summary {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .foot {
+    margin-top: auto;
+    padding-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--faint);
+  }
+</style>

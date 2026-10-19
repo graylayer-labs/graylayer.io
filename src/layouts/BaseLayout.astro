@@ -7,12 +7,15 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
+  /** Per-project accent hex; sets --accent for the whole page. */
+  accent?: string;
 }
 
 const {
   title,
-  description = 'Research, code, and writing by Eoin McAllister — graylayer.io',
+  description = 'Projects, write-ups and CV of Eoin McAllister, ML engineer. graylayer.io',
   ogImage,
+  accent,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -21,7 +24,7 @@ const socialTitle = title === 'Home' ? 'graylayer.io' : `${title} — graylayer.
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" style={accent ? `--accent:${accent}` : undefined}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -31,25 +34,29 @@ const socialTitle = title === 'Home' ? 'graylayer.io' : `${title} — graylayer.
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={socialTitle} />
     <meta property="og:description" content={description} />
     {ogImage && <meta property="og:image" content={new URL(ogImage, Astro.site)} />}
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={socialTitle} />
     <meta name="twitter:description" content={description} />
     {ogImage && <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />}
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <script is:inline>
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <Nav />
