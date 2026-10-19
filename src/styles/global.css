@@ -18,14 +18,25 @@
   --ok: #059669;
 
   --accent: #0a0a0a;
-  --accent-text: color-mix(in srgb, var(--accent) 78%, black);
-  --accent-tint: color-mix(in srgb, var(--accent) 8%, var(--bg));
-  --accent-line: color-mix(in srgb, var(--accent) 24%, var(--bg));
+  --text-base: black;
+  --text-pct: 78%;
+  --tint-pct: 8%;
+  --line-pct: 24%;
+  --tile: transparent;
 
   --font-sans: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
   --max: 1080px;
   --gutter: 24px;
+}
+
+/* Derived from --accent. Re-declared on .accent-scope so an element that sets
+   its own --accent (a project card) gets matching tints, not the page's. */
+:root,
+.accent-scope {
+  --accent-text: color-mix(in srgb, var(--accent) var(--text-pct), var(--text-base));
+  --accent-tint: color-mix(in srgb, var(--accent) var(--tint-pct), var(--bg));
+  --accent-line: color-mix(in srgb, var(--accent) var(--line-pct), var(--bg));
 }
 
 @media (prefers-color-scheme: dark) {
@@ -43,9 +54,11 @@
     --border-soft: #1f1f1f;
     --inverse-bg: #fafafa;
     --inverse-fg: #0a0a0a;
-    --accent-text: color-mix(in srgb, var(--accent) 62%, white);
-    --accent-tint: color-mix(in srgb, var(--accent) 12%, var(--bg));
-    --accent-line: color-mix(in srgb, var(--accent) 30%, var(--bg));
+    --text-base: white;
+    --text-pct: 62%;
+    --tint-pct: 12%;
+    --line-pct: 30%;
+    --tile: var(--surface);
   }
 }
 
@@ -63,9 +76,11 @@
   --border-soft: #1f1f1f;
   --inverse-bg: #fafafa;
   --inverse-fg: #0a0a0a;
-  --accent-text: color-mix(in srgb, var(--accent) 62%, white);
-  --accent-tint: color-mix(in srgb, var(--accent) 12%, var(--bg));
-  --accent-line: color-mix(in srgb, var(--accent) 30%, var(--bg));
+  --text-base: white;
+  --text-pct: 62%;
+  --tint-pct: 12%;
+  --line-pct: 30%;
+  --tile: var(--surface);
 }
 
 *,
@@ -83,7 +98,7 @@ body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-sans);
-  line-height: 1.5;
+  line-height: normal;
   overflow-x: hidden;
 }
 
@@ -112,7 +127,7 @@ iframe {
 }
 
 .wrap {
-  max-width: var(--max);
+  max-width: calc(var(--max) + 2 * var(--gutter));
   margin: 0 auto;
   padding-inline: var(--gutter);
 }
@@ -128,13 +143,11 @@ iframe {
 .eyebrow {
   font-family: var(--font-mono);
   font-size: 13px;
-  font-weight: 500;
   color: var(--faint);
 }
 
 .h1 {
   font-size: clamp(34px, 6vw, 48px);
-  line-height: 1.08;
   font-weight: 600;
   letter-spacing: -0.035em;
 }
@@ -154,7 +167,7 @@ iframe {
 .btn {
   display: inline-flex;
   align-items: center;
-  padding: 12px 18px;
+  padding: 12px 20px;
   border: 1px solid var(--border);
   border-radius: 8px;
   font-size: 15px;
