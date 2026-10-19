@@ -62,7 +62,7 @@ const { Content } = await render(post);
     background: var(--accent);
   }
   .art {
-    max-width: 700px;
+    max-width: calc(700px + 2 * var(--gutter));
     margin: 0 auto;
     padding: 48px var(--gutter) 96px;
   }
@@ -74,7 +74,7 @@ const { Content } = await render(post);
     gap: 8px;
   }
   .proj {
-    color: var(--fg);
+    color: var(--accent-text);
   }
   .badge-row {
     margin-top: 20px;
