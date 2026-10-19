@@ -8,6 +8,10 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   },
+  "routes": [
+    { "pattern": "graylayer.io", "custom_domain": true },
+    { "pattern": "www.graylayer.io", "custom_domain": true }
+  ],
   "workers_dev": true,
   "preview_urls": true
 }
