@@ -14,6 +14,8 @@ Until the cutover in #21 is done, GitHub Pages (`.github/workflows/deploy.yml`, 
 - Sitemap: `/sitemap-index.xml` (listed in `public/robots.txt`); the 404 page and example pages are excluded.
 - Post pages carry `og:type` article, published/modified time and tag meta. There are no generated OG images yet, so Twitter cards use `summary` until a post or site image is set.
 
+Maintainers and agents: see [`CLAUDE.md`](CLAUDE.md) for routes, the content model and the `.claude/skills/` playbooks for adding projects, posts and demos and for hosting.
+
 ## Run locally
 
 ```bash
