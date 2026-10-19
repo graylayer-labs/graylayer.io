@@ -23,7 +23,7 @@ const posts = (await getPosts()).slice(0, 3);
       </div>
     </section>
 
-    <section class="block">
+    <section class="block featured">
       <div class="head">
         <h2 class="h2">Featured projects</h2>
         <a href="/projects/" class="more">All projects →</a>
@@ -34,7 +34,7 @@ const posts = (await getPosts()).slice(0, 3);
     </section>
 
     <section class="block">
-      <div class="head">
+      <div class="head latest">
         <h2 class="h2">Latest writing</h2>
         <a href="/writing/" class="more">All posts →</a>
       </div>
@@ -76,6 +76,12 @@ const posts = (await getPosts()).slice(0, 3);
     align-items: baseline;
     gap: 16px;
     margin-bottom: 24px;
+  }
+  .featured {
+    margin-top: 112px;
+  }
+  .latest {
+    margin-bottom: 8px;
   }
   .more {
     font-size: 14px;

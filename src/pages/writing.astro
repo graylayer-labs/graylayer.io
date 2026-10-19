@@ -17,7 +17,7 @@ const years = [...new Set(rows.map((r) => r.post.data.pubDate.getUTCFullYear()))
         <h1 class="h1">Writing</h1>
         <p class="lede intro">Every post, across all projects, newest first.</p>
       </div>
-      {FEED_URL && <a href={FEED_URL} class="btn">RSS feed</a>}
+      {FEED_URL && <a href={FEED_URL} class="btn rss">RSS feed</a>}
     </div>
 
     {rows.length === 0 && <p class="lede intro">No posts yet.</p>}
@@ -40,7 +40,7 @@ const years = [...new Set(rows.map((r) => r.post.data.pubDate.getUTCFullYear()))
 
 <style>
   .narrow {
-    max-width: 820px;
+    max-width: calc(820px + 2 * var(--gutter));
     margin: 0 auto;
     padding-inline: var(--gutter);
   }
@@ -51,12 +51,18 @@ const years = [...new Set(rows.map((r) => r.post.data.pubDate.getUTCFullYear()))
     align-items: flex-end;
     gap: 16px;
   }
+  .rss {
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--muted);
+  }
   .intro {
     margin-top: 12px;
   }
   .row {
     display: grid;
-    grid-template-columns: 70px minmax(0, 1fr);
+    grid-template-columns: 90px minmax(0, 1fr);
     gap: 20px;
     justify-content: stretch;
   }

@@ -59,7 +59,7 @@ const resources = [
 
     {data.demos.length > 0 && (
       <section id="demo" class="block">
-        <h2 class="h2 sh">Demo</h2>
+        <h2 class="h2 sh demo-h">Demo</h2>
         <div class="demos">
           {data.demos.map((d) => <Demo kind={d.kind} src={d.src} caption={d.caption} />)}
         </div>
@@ -68,7 +68,7 @@ const resources = [
 
     {(posts.length > 0 || resources.length > 0 || data.timeline.length > 0) && <section class="block cols">
       {posts.length > 0 && <div class="writeups">
-        <h2 class="h2 sh">Write-ups</h2>
+        <h2 class="h2 sh wu-h">Write-ups</h2>
         {posts.map((p) => (
           <a href={postHref(p)} class="post">
             <span class="num">{String(p.data.part).padStart(2, '0')}</span>
@@ -154,6 +154,7 @@ const resources = [
     gap: 10px;
   }
   .actions .btn {
+    padding-inline: 18px;
     font-size: 14px;
   }
   .main {
@@ -166,7 +167,7 @@ const resources = [
   }
   .stat {
     padding: 20px;
-    background: var(--surface);
+    background: var(--tile);
     border: 1px solid var(--border);
     border-radius: 12px;
     min-width: 0;
@@ -196,6 +197,12 @@ const resources = [
   }
   .sh {
     margin-bottom: 12px;
+  }
+  .demo-h {
+    margin-bottom: 16px;
+  }
+  .wu-h {
+    margin-bottom: 8px;
   }
   .demos {
     display: flex;
