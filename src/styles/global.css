@@ -1,27 +1,16 @@
 :root {
-  --font-mono: 'DM Mono', monospace;
   --font-serif: 'Instrument Serif', serif;
 
-  --color-bg: #ffffff;
-  --color-text: #1a1a18;
-  --color-text-muted: #6b6b67;
-  --color-text-faint: #9e9e9a;
-  --color-border: rgba(26, 26, 24, 0.12);
-  --color-border-mid: rgba(26, 26, 24, 0.22);
+  /* Old names now follow the theme tokens, so the toggle reaches old pages. */
+  --color-bg: var(--bg);
+  --color-text: var(--fg);
+  --color-text-muted: var(--muted);
+  --color-text-faint: var(--faint);
+  --color-border: var(--border);
+  --color-border-mid: var(--border);
 
   --space-page: 40px;
   --space-section: 72px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #111110;
-    --color-text: #e8e8e4;
-    --color-text-muted: #8a8a84;
-    --color-text-faint: #5a5a56;
-    --color-border: rgba(232, 232, 228, 0.1);
-    --color-border-mid: rgba(232, 232, 228, 0.18);
-  }
 }
 
 /* Design tokens. Light is the default; dark follows the OS unless the
@@ -101,9 +90,9 @@
 }
 
 body {
-  font-family: var(--font-mono);
-  background: var(--color-bg);
-  color: var(--color-text);
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--fg);
   font-size: 14px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
