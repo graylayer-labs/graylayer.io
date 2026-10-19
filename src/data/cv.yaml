@@ -1,0 +1,35 @@
+# Drives /about/ (and the PDF at /cv.pdf once it is generated).
+# Everything in [BRACKETS] is a placeholder awaiting the owner.
+name: Eoin McAllister
+headline: ML engineer · reinforcement learning, evaluation, production ML
+location: Dublin, Ireland
+intro: >-
+  [Three or four sentences in your own voice: what you work on, what you care
+  about, and what you are looking for next.] Current research: language-conditioned
+  control.
+open_to: "[ROLES / COLLABORATIONS]"
+cv_pdf: /cv.pdf
+links:
+  - { label: GitHub, url: "https://github.com/graylayer-labs" }
+  - { label: LinkedIn, url: "#" } # [PLACEHOLDER URL]
+  - { label: Google Scholar, url: "#" } # [PLACEHOLDER URL]
+  - { label: Email, url: "#" } # [PLACEHOLDER mailto: link]
+# Open owner decision: what the work history lists. Keep placeholders.
+experience:
+  - period: "[YYYY] – now"
+    role: "[ROLE]"
+    employer: "[EMPLOYER]"
+    highlights: ["[Achievement with a number]", "[Achievement with a number]"]
+  - period: "[YYYY] – [YYYY]"
+    role: "[ROLE]"
+    employer: "[EMPLOYER]"
+    highlights: ["[Achievement with a number]", "[Achievement with a number]"]
+education:
+  - { degree: "[DEGREE]", institution: "[INSTITUTION]", year: "[YYYY]" }
+skills:
+  - Python
+  - PyTorch
+  - Reinforcement learning
+  - "[SKILL]"
+publications:
+  - citation: "[Author list]. [Title]. [Venue], [YYYY]."
