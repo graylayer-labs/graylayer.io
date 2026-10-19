@@ -1,0 +1,35 @@
+---
+// Home-page row: accent dot, title, "Project · date".
+import { fmtDate, postHref, type Post } from '@/lib/site';
+import { getEntry } from 'astro:content';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const project = await getEntry(post.data.project);
+---
+
+<a href={postHref(post)} class="list-row" style={`--accent:${project?.data.accent}`}>
+  <span class="t"><span class="dot"></span><span class="list-title">{post.data.title}</span></span>
+  <span class="m">{project?.data.title} · {fmtDate(post.data.pubDate, { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+</a>
+
+<style>
+  .t {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    min-width: 0;
+  }
+  .list-title {
+    font-size: 17px;
+    font-weight: 500;
+  }
+  .m {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--faint);
+  }
+</style>

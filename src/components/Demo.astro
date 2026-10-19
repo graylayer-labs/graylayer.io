@@ -1,0 +1,39 @@
+---
+interface Props {
+  kind: 'video' | 'hf-space' | 'iframe' | 'widget';
+  src: string;
+  caption?: string;
+}
+
+const { kind, src, caption } = Astro.props;
+---
+
+{src && (
+  <figure>
+    {kind === 'video' ? (
+      <video class="frame" src={src} controls preload="metadata" playsinline></video>
+    ) : (
+      <iframe class="frame" src={src} title={caption ?? 'Demo'} loading="lazy" allow="fullscreen"></iframe>
+    )}
+    {caption && <figcaption>{caption}</figcaption>}
+  </figure>
+)}
+
+<style>
+  figure {
+    margin: 0;
+  }
+  .frame {
+    display: block;
+    width: 100%;
+    height: min(420px, 90vw);
+    border: 0;
+    border-radius: 14px;
+    background: #0a0a0a;
+  }
+  figcaption {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--faint);
+  }
+</style>
