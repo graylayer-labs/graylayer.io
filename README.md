@@ -8,6 +8,12 @@ The site is moving from GitHub Pages to Cloudflare Workers static assets (#21). 
 
 Until the cutover in #21 is done, GitHub Pages (`.github/workflows/deploy.yml`, `public/CNAME`) still serves graylayer.io.
 
+## Feed and sitemap
+
+- RSS: `/rss.xml` (full post content, canonical links), built from `src/pages/rss.xml.ts` with the same visibility helper as the pages, so drafts and example posts are left out of production.
+- Sitemap: `/sitemap-index.xml` (listed in `public/robots.txt`); the 404 page and example pages are excluded.
+- Post pages carry `og:type` article, published/modified time and tag meta. There are no generated OG images yet, so Twitter cards use `summary` until a post or site image is set.
+
 ## Run locally
 
 ```bash

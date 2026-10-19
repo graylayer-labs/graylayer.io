@@ -3,8 +3,8 @@ import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 export type Project = CollectionEntry<'projects'>;
 export type Post = CollectionEntry<'posts'>;
 
-/** Set to the feed URL once #23 ships; links to it appear automatically. */
-export const FEED_URL: string | null = null;
+/** Path of the RSS feed (src/pages/rss.xml.ts). Footer and Writing link to it. */
+export const FEED_URL = '/rss.xml';
 
 export const postSlug = (post: Post) => post.id.split('/').pop() as string;
 export const postHref = (post: Post) => `/projects/${post.data.project.id}/${postSlug(post)}/`;
