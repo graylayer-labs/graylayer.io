@@ -23,15 +23,15 @@ const parts = [
   data-status={data.status}
   data-category={data.category}
 >
-  <div class="cover">
-    {data.cover && <img src={data.cover} alt="" loading="lazy" />}
-  </div>
+  {data.cover ? (
+    <div class="cover"><img src={data.cover} alt="" loading="lazy" /></div>
+  ) : <div class="rule"></div>}
   <div class="body">
     <span class:list={['meta', { live: data.status === 'active' }]}>{statusLabel(project)}</span>
     {data.example && <span><ExampleBadge /></span>}
     <span class="title">{data.title}</span>
     <span class="summary">{data.summary}</span>
-    {parts.length > 0 && <span class="foot">{parts.join(' · ')}</span>}
+    {parts.length > 0 && <span class="foot">{parts.join(', ')}</span>}
   </div>
 </a>
 
@@ -57,9 +57,13 @@ const parts = [
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
     font-size: 12px;
     color: var(--accent-text);
+  }
+  .rule {
+    height: 3px;
+    background: var(--accent);
   }
   .cover img {
     width: 100%;
@@ -74,7 +78,7 @@ const parts = [
     flex-grow: 1;
   }
   .meta {
-    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
     font-size: 12px;
     color: var(--faint);
   }
@@ -93,7 +97,7 @@ const parts = [
   .foot {
     margin-top: auto;
     padding-top: 14px;
-    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
     font-size: 12px;
     color: var(--faint);
   }

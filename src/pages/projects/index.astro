@@ -4,6 +4,8 @@ import ProjectCard from '@/components/ProjectCard.astro';
 import { getProjects } from '@/lib/site';
 
 const projects = await getProjects();
+// Filtering a short list only adds noise, so the chips wait for a few projects.
+const showFilters = projects.length >= 4;
 const filters = [
   { key: 'all', label: 'All' },
   { key: 'active', label: 'Active' },
@@ -17,11 +19,11 @@ const filters = [
     <h1 class="h1">Projects</h1>
     <p class="lede intro">Each project keeps its write-ups, demos, results and code in one place.</p>
 
-    <div class="chips" role="group" aria-label="Filter projects">
+    {showFilters && <div class="chips" role="group" aria-label="Filter projects">
       {filters.map((f) => (
         <button type="button" class="chip" data-filter={f.key} aria-pressed={f.key === 'all'}>{f.label}</button>
       ))}
-    </div>
+    </div>}
 
     <div class="grid" data-grid>
       {projects.map((p) => <ProjectCard project={p} />)}

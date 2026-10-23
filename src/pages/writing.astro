@@ -29,7 +29,7 @@ const years = [...new Set(rows.map((r) => r.post.data.pubDate.getUTCFullYear()))
             <span class="date">{fmtDate(post.data.pubDate, { day: '2-digit', month: 'short' })}</span>
             <span class="rb">
               <span class="list-title ttl">{post.data.title}</span>
-              <span class="pj"><span class="dot"></span>{project.data.title} · Part {post.data.part}</span>
+              <span class="pj"><span class="dot"></span>{project.data.title}, part {post.data.part}</span>
             </span>
           </a>
         ))}
@@ -67,7 +67,7 @@ const years = [...new Set(rows.map((r) => r.post.data.pubDate.getUTCFullYear()))
     justify-content: stretch;
   }
   .date {
-    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
     font-size: 13px;
     color: var(--faint);
     padding-top: 3px;

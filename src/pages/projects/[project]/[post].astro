@@ -33,7 +33,7 @@ const { Content } = await render(post);
     {project.data.example && <p class="badge-row"><ExampleBadge /></p>}
     <h1 class="title">{post.data.title}</h1>
     <p class="desc">{post.data.description}</p>
-    <div class="meta mono">
+    <div class="meta">
       <span>{fmtDate(post.data.pubDate, { day: 'numeric', month: 'short', year: 'numeric' })}</span>
       <span>{readMinutes(post.body)} min read</span>
       {post.data.tags.map((t) => <span>#{t}</span>)}
@@ -43,15 +43,15 @@ const { Content } = await render(post);
 
     <div class="pn">
       {prev ? (
-        <a href={postHref(prev)} class="pcard"><span class="d">← Part {prev.data.part}</span><span class="t">{prev.data.title}</span></a>
+        <a href={postHref(prev)} class="pcard"><span class="d">Previous: part {prev.data.part}</span><span class="t">{prev.data.title}</span></a>
       ) : <span></span>}
       {next && (
-        <a href={postHref(next)} class="pcard right"><span class="d">Part {next.data.part} →</span><span class="t">{next.data.title}</span></a>
+        <a href={postHref(next)} class="pcard right"><span class="d">Next: part {next.data.part}</span><span class="t">{next.data.title}</span></a>
       )}
     </div>
     <a href={projectHref(project)} class="back">
       <span><span class="t">{project.data.title}</span><br /><span class="sub">Demo, results and code</span></span>
-      <span class="go">Project →</span>
+      <span class="go">Open project</span>
     </a>
   </article>
 </BaseLayout>

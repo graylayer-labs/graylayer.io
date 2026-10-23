@@ -24,22 +24,22 @@ const posts = (await getPosts()).slice(0, 3);
     <section class="block featured">
       <div class="head">
         <h2 class="h2">Featured projects</h2>
-        <a href="/projects/" class="more">All projects →</a>
+        <a href="/projects/" class="more">All projects</a>
       </div>
       <div class="grid">
         {featured.map((p) => <ProjectCard project={p} />)}
       </div>
     </section>
 
-    <section class="block">
+    {posts.length > 0 && <section class="block">
       <div class="head latest">
         <h2 class="h2">Latest writing</h2>
-        <a href="/writing/" class="more">All posts →</a>
+        <a href="/writing/" class="more">All posts</a>
       </div>
-      {posts.length === 0 ? <p class="empty">No posts yet.</p> : <div>
+      <div>
         {posts.map((p) => <PostRow post={p} />)}
-      </div>}
-    </section>
+      </div>
+    </section>}
   </div>
 </BaseLayout>
 
@@ -98,9 +98,6 @@ const posts = (await getPosts()).slice(0, 3);
   }
   .more:hover {
     color: var(--fg);
-  }
-  .empty {
-    color: var(--muted);
   }
   .grid {
     display: grid;

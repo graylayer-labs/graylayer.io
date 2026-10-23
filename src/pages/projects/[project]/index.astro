@@ -16,8 +16,6 @@ const { Content } = await render(project);
 const hasBody = Boolean(project.body?.trim());
 
 const resources = [
-  { label: 'GitHub repository', url: data.links.repo },
-  { label: 'Paper / preprint', url: data.links.paper },
   { label: 'Dataset', url: data.links.dataset },
   { label: 'Model weights', url: data.links.weights },
 ].filter((r) => r.url);
@@ -30,7 +28,7 @@ const resources = [
       <div class="row">
         <div class="titles">
           {data.example && <p class="badge-row"><ExampleBadge /></p>}
-          <p class="status">{statusLabel(project)}{data.since && ` · since ${data.since}`}</p>
+          <p class="status">{statusLabel(project)}{data.since && `, since ${data.since}`}</p>
           <h1 class="h1 name">{data.title}</h1>
           <p class="sum">{data.summary}</p>
         </div>
@@ -50,7 +48,7 @@ const resources = [
           <div class="stat"><p class="k">{m.label}</p><p class="v">{m.value}</p></div>
         ))}
         {data.stack.length > 0 && (
-          <div class="stat"><p class="k">Stack</p><p class="mono stack">{data.stack.join(' · ')}</p></div>
+          <div class="stat"><p class="k">Stack</p><p class="stack">{data.stack.join(', ')}</p></div>
         )}
       </section>
     )}
@@ -75,7 +73,7 @@ const resources = [
             <span class="pbody">
               <span class="ptitle">{p.data.title}</span>
               <span class="pdesc">{p.data.description}</span>
-              <span class="pmeta">{fmtDate(p.data.pubDate, { day: 'numeric', month: 'short', year: 'numeric' })} · {readMinutes(p.body)} min read</span>
+              <span class="pmeta">{fmtDate(p.data.pubDate, { day: 'numeric', month: 'short', year: 'numeric' })}, {readMinutes(p.body)} min read</span>
             </span>
           </a>
         ))}
@@ -94,7 +92,7 @@ const resources = [
             <h2 class="section-label sh">Timeline</h2>
             <div class="tl">
               {data.timeline.map((t) => (
-                <span><span class="mono td">{t.date}</span><br />{t.label}</span>
+                <span><span class="td">{t.date}</span><br />{t.label}</span>
               ))}
             </div>
           </div>
@@ -132,7 +130,7 @@ const resources = [
     margin-bottom: 12px;
   }
   .status {
-    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
     font-size: 13px;
     color: var(--accent-text);
   }
@@ -233,7 +231,7 @@ const resources = [
     border-bottom: 1px solid var(--border);
   }
   .num {
-    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
     font-size: 13px;
     color: var(--accent-text);
     padding-top: 3px;
@@ -256,7 +254,7 @@ const resources = [
     color: var(--muted);
   }
   .pmeta {
-    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
     font-size: 12px;
     color: var(--faint);
   }
