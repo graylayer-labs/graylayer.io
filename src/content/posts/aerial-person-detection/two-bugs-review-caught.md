@@ -30,7 +30,7 @@ Again, every test passed. The reviewer worked the arithmetic by hand and saw tha
 
 ## Both leaned toward the answer I wanted
 
-My milestone note says either bug would have tilted a result towards the conclusion I expected ([milestone note](https://github.com/graylayer-labs/ssl-aerial-person-detection/blob/main/docs/milestones/off-the-shelf-bar.md)). I expected the frozen foundation model to win. A detector with most of its outputs untrained should look worse than it is, which is what that expectation predicts. I haven't measured how far each bug would have moved a number, so I can't say how large the tilt was.
+My milestone note says either bug would have tilted a result towards the conclusion I expected ([milestone note](https://github.com/graylayer-labs/ssl-aerial-person-detection/blob/main/docs/milestones/off-the-shelf-bar.md)). I expected the frozen foundation model to win. A detector with most of its outputs untrained looks worse than it really is, so the anchor bug pushed in the direction I expected. I haven't measured how far each bug would have moved a number, so I can't say how large the tilt was.
 
 That's what worries me more than the bugs themselves. A bug that pushes against what you believe gets noticed, because the result looks odd and you go looking. A bug that pushes towards it looks like confirmation.
 

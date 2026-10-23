@@ -6,7 +6,6 @@ category: research
 accent: "#0d9488"
 since: "Aug 2026"
 featured: true
-cover: /posts/aerial-person-detection/pipeline.svg
 stack: [python, pytorch, transformers, torchvision, siglip-2]
 links:
   repo: https://github.com/graylayer-labs/ssl-aerial-person-detection
