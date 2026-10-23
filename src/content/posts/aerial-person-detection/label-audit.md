@@ -12,7 +12,7 @@ I'm building a person detector for search and rescue from drone footage, with fe
 
 ![The planned pipeline: drone footage, pairing the two cameras, adaptation, a detector trained with few labels, and evaluation on unseen flights.](/posts/aerial-person-detection/pipeline.svg)
 
-Before I trained anything I spent three days checking what the work would stand on. That turned out to be the most useful thing I did. Here's what broke.
+Before training anything, I checked what the work would stand on. That turned out to be the most useful thing I did. Here's what broke.
 
 ## The pairs were wrong, twice
 
@@ -20,17 +20,17 @@ The public dataset (WiSARD) has an RGB and a thermal camera on the same flights,
 
 The first paired frames by position in sorted order. That included 1,620 pairs from a flight where the two cameras run at different frame rates, so those pairs show different scenes. The second used a parser that only read 5 or 6 digit frame numbers, so seven clip pairs collapsed to one arbitrary pair each.
 
-The fixed rule gives 14,834 pairs from 17 clip pairs, and 5,739 of them are labelled in both cameras. I checked them by camera motion and by eye. The details are in the [pairing review](https://github.com/graylayer-labs/ssl-aerial-person-detection/blob/main/docs/wisard-pairing-review.md).
+The fixed rule gives 14,834 pairs from 17 clip pairs, and 5,739 of them are labelled in both cameras. They were checked against camera motion and by looking at the frames. The details are in the [pairing review](https://github.com/graylayer-labs/ssl-aerial-person-detection/blob/main/docs/wisard-pairing-review.md).
 
 ## The labels were not complete
 
-I assumed the labels were complete, because a dataset with boxes on it looks finished. So I sampled 99 labelled frames per camera, 198 in total, and looked for people with no box.
+I assumed the labels were complete, because a dataset with boxes on it looks finished. So a sample of 99 labelled frames per camera, 198 in total, was reviewed for people with no box.
 
 In RGB, about 1.0% of the people I could see had no box. In thermal it was 5.7%. That's small enough to ignore if the misses are scattered. They weren't scattered. All 10 missed thermal people in the sample came from a single clip, and that clip has 1,201 of its 1,417 frames with an empty label file ([label completeness review](https://github.com/graylayer-labs/ssl-aerial-person-detection/blob/main/docs/label-completeness-review.md)).
 
-So I looked at that clip harder. Of the 35 empty-label frames I was sure about, 30 showed people with no box. That is 85.7% ([the trusted-ground write-up](https://github.com/graylayer-labs/ssl-aerial-person-detection/blob/main/docs/blog/2026-10-trusted-ground.md)). Most of that clip was simply never labelled, and nothing in the dataset says so.
+So that clip got a closer look. Of the 35 empty-label frames the review was sure about, 30 showed people with no box. That is 85.7%, and at least 59% even if every unsure frame turns out to be empty ([the trusted-ground write-up](https://github.com/graylayer-labs/ssl-aerial-person-detection/blob/main/docs/blog/2026-10-trusted-ground.md)). Most of that clip was simply never labelled, and nothing in the dataset says so.
 
-| What I checked | Number |
+| Check | Number |
 |---|---|
 | Pairs after the fix | 14,834 from 17 clip pairs |
 | People with no box, RGB / thermal | 1.0% / 5.7% |
