@@ -12,11 +12,9 @@ const posts = (await getPosts()).slice(0, 3);
 <BaseLayout title="Home">
   <div class="wrap page">
     <section class="hero">
-      <p class="eyebrow">{about.name} · {about.title} · Dublin</p>
-      <h1 class="h1 big">I design machine learning models, from choosing the right one to running it in production.</h1>
-      <p class="lede">
-        I pick the model that fits the data problem, then take it through evaluation, pipelines and deployment. Each project here has its write-ups, demos and code in one place.
-      </p>
+      <p class="who">{about.name}, {about.title.toLowerCase()} in Dublin</p>
+      <h1 class="big">I build ML systems.</h1>
+      <p class="sub">From choosing the model to running it in production.</p>
       <div class="cta">
         <a href="/projects/" class="btn btn-primary">See projects</a>
         <a href="/about/" class="btn">About me</a>
@@ -47,19 +45,30 @@ const posts = (await getPosts()).slice(0, 3);
 
 <style>
   .page {
-    padding-top: 96px;
+    padding-top: 64px;
   }
-  .hero {
-    max-width: 760px;
+  @media (max-width: 600px) {
+    .page {
+      padding-top: 48px;
+    }
   }
+  .who {
+    font-size: 15px;
+    color: var(--muted);
+  }
+  /* The one loud element on the page: a single line at display size. */
   .big {
-    margin-top: 20px;
-    font-size: clamp(36px, 8vw, 60px);
-    line-height: 1.04;
+    margin-top: 16px;
+    font-size: clamp(44px, 8.5vw, 96px);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.05em;
   }
-  .lede {
-    margin-top: 24px;
+  .sub {
+    margin-top: 20px;
     font-size: 19px;
+    line-height: 1.5;
+    color: var(--muted);
   }
   .cta {
     margin-top: 32px;
@@ -78,7 +87,7 @@ const posts = (await getPosts()).slice(0, 3);
     margin-bottom: 24px;
   }
   .featured {
-    margin-top: 112px;
+    margin-top: 72px;
   }
   .latest {
     margin-bottom: 8px;
