@@ -28,7 +28,7 @@ I assumed the labels were complete, because a dataset with boxes on it looks fin
 
 In RGB, about 1.0% of the people I could see had no box. In thermal it was 5.7%. That's small enough to ignore if the misses are scattered. They weren't scattered. All 10 missed thermal people in the sample came from a single clip, and that clip has 1,201 of its 1,417 frames with an empty label file ([label completeness review](https://github.com/graylayer-labs/ssl-aerial-person-detection/blob/main/docs/label-completeness-review.md)).
 
-So that clip got a closer look. Of the 35 empty-label frames the review was sure about, 30 showed people with no box. That is 85.7%, and at least 59% even if every unsure frame turns out to be empty ([the trusted-ground write-up](https://github.com/graylayer-labs/ssl-aerial-person-detection/blob/main/docs/blog/2026-10-trusted-ground.md)). Most of that clip was simply never labelled, and nothing in the dataset says so.
+So that clip got a closer look. Of the 35 empty-label frames the review was sure about, 30 showed people with no box. That is 85.7%, and still 58.8% (30 of 51) even if every unsure frame turns out to be empty ([the trusted-ground write-up](https://github.com/graylayer-labs/ssl-aerial-person-detection/blob/main/docs/blog/2026-10-trusted-ground.md)). Most of that clip was simply never labelled, and nothing in the dataset says so.
 
 | Check | Number |
 |---|---|
