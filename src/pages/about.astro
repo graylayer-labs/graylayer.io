@@ -17,7 +17,7 @@ const { Content } = await render(entry);
       <div>
         <h1 class="name">{data.name}</h1>
         <p class="role">{data.title}</p>
-        <p class="mono loc">{data.location}</p>
+        <p class="loc">{data.location}</p>
       </div>
       <div class="links">
         {data.links.map((l) => <a href={l.url}>{l.label} ↗</a>)}
@@ -90,6 +90,7 @@ const { Content } = await render(entry);
     gap: 56px;
   }
   .bio {
+    max-width: 34em;
     font-size: 19px;
     line-height: 1.65;
   }

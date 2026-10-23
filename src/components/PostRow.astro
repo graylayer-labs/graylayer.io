@@ -1,5 +1,5 @@
 ---
-// Home-page row: accent dot, title, "Project · date".
+// Home-page row: accent dot, title, "Project, date".
 import { fmtDate, postHref, type Post } from '@/lib/site';
 import { getEntry } from 'astro:content';
 
@@ -13,7 +13,7 @@ const project = await getEntry(post.data.project);
 
 <a href={postHref(post)} class="list-row" style={`--accent:${project?.data.accent}`}>
   <span class="t"><span class="dot"></span><span class="list-title">{post.data.title}</span></span>
-  <span class="m">{project?.data.title} · {fmtDate(post.data.pubDate, { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+  <span class="m">{project?.data.title}, {fmtDate(post.data.pubDate, { day: 'numeric', month: 'short', year: 'numeric' })}</span>
 </a>
 
 <style>
@@ -28,7 +28,7 @@ const project = await getEntry(post.data.project);
     font-weight: 500;
   }
   .m {
-    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
     font-size: 13px;
     color: var(--faint);
   }

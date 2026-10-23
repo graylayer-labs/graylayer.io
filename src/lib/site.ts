@@ -52,6 +52,4 @@ export const fmtDate = (d: Date, opts: Intl.DateTimeFormatOptions) =>
   d.toLocaleDateString('en-GB', { timeZone: 'UTC', ...opts });
 
 export const statusLabel = (p: Project) =>
-  `${p.data.status === 'active' ? '● Active' : 'Finished'} · ${
-    p.data.category === 'research' ? 'Research' : 'Engineering'
-  }`;
+  `${p.data.status === 'active' ? '● Active' : 'Finished'} ${p.data.category}`;

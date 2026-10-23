@@ -225,10 +225,9 @@ iframe {
 }
 
 .section-label {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--faint);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
 }
 
 /* Post body (Markdown) */
