@@ -1,4 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="8" fill="#0a0a0a"/>
-  <text x="16" y="22" text-anchor="middle" font-family="monospace" font-size="16" font-weight="700" fill="white">gl</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><style>.b{fill:#a3a3a3}.t{fill:#0a0a0a}@media (prefers-color-scheme:dark){.b{fill:#525252}.t{fill:#fafafa}}</style><rect class="b" width="32" height="32" rx="8"/><path class="t" d="M0 8a8 8 0 0 1 8-8h16a8 8 0 0 1 8 8v10H0z"/></svg>
