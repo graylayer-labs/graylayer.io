@@ -11,7 +11,7 @@ const links = [
 
 <header class="site-header">
   <div class="wrap bar">
-    <a href="/" class="brand"><span class="mark"></span>graylayer</a>
+    <a href="/" class="brand"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" /><path d="M0 8a8 8 0 0 1 8-8h16a8 8 0 0 1 8 8v10H0z" /></svg>graylayer</a>
     <nav aria-label="Main">
       {links.map((l) => (
         <a
@@ -47,10 +47,14 @@ const links = [
     font-size: 16px;
   }
   .mark {
-    width: 18px;
-    height: 18px;
-    border-radius: 5px;
-    background: var(--fg);
+    width: 20px;
+    height: 20px;
+  }
+  .mark rect {
+    fill: var(--mark-base);
+  }
+  .mark path {
+    fill: var(--fg);
   }
   nav {
     display: flex;
