@@ -57,7 +57,7 @@
     --inverse-bg: #fafafa;
     --inverse-fg: #0a0a0a;
     --text-base: white;
-    --text-pct: 55%;
+    --text-pct: 52%;
     --tint-pct: 12%;
     --line-pct: 62%;
     --tile: var(--surface);
@@ -80,7 +80,7 @@
   --inverse-bg: #fafafa;
   --inverse-fg: #0a0a0a;
   --text-base: white;
-  --text-pct: 55%;
+  --text-pct: 52%;
   --tint-pct: 12%;
   --line-pct: 62%;
   --tile: var(--surface);
